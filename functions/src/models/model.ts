@@ -1,0 +1,1 @@
+C:/Users/d.ghiotto/Desktop/Davide/projects/life4weeks/models/model.ts
