@@ -9,7 +9,7 @@
 		"deploy": "firebase deploy --only functions",
 		"deploy:force": "firebase deploy --only functions --force",
 		"logs": "firebase functions:log",
-		"gulp": "gulp"
+		"link": "gulp"
 	},
 	"engines": {
 		"node": "8"
