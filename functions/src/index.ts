@@ -7,6 +7,10 @@ import * as functions from 'firebase-functions';
 // 	response.send('Hello from Firebase!');
 // });
 
-export const testFunction = functions.https.onRequest((request, response) => {
+// export const testFunction = functions.https.onRequest((request, response) => {
+// 	response.send('Hello from Firebase!');
+// });
+
+export const testFunction2 = functions.https.onRequest((request, response) => {
 	response.send('Hello from Firebase!');
 });
