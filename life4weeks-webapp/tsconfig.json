@@ -12,7 +12,12 @@
 		"importHelpers": true,
 		"target": "es2015",
 		"lib": ["es2018", "dom"],
-		"paths": {}
+		"paths": {
+			"@services/*": ["src/app/services/*"],
+			"@components/*": ["src/app/components/*"],
+			"@pages/*": ["src/app/pages/*"],
+			"@models/*": ["../models/*"]
+		}
 	},
 	"angularCompilerOptions": {
 		"fullTemplateTypeCheck": true,
