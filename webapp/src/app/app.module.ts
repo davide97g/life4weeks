@@ -8,10 +8,23 @@ import { HomeComponent } from '@pages/home/home.component';
 import { NotFoundComponent } from '@pages/not-found/not-found.component';
 /** components */
 import { MenuComponent } from '@components/menu/menu.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 /** services */
 @NgModule({
 	declarations: [AppComponent, HomeComponent, MenuComponent, NotFoundComponent],
-	imports: [BrowserModule, AppRoutingModule],
+	imports: [
+		BrowserModule,
+		AppRoutingModule,
+		BrowserAnimationsModule,
+		MatToolbarModule,
+		MatButtonModule,
+		MatCardModule,
+		MatIconModule,
+	],
 	providers: [],
 	bootstrap: [AppComponent],
 })
