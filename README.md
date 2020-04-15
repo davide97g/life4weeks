@@ -4,6 +4,10 @@
 
 Webapp for life4weeks project
 
+## Website
+
+[Life4weeks webapp](https://life-4-weeks.web.app/)
+
 ## Setup
 
 -   [Node.js](https://nodejs.org/it/download/)
