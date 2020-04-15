@@ -13,9 +13,10 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
+import { LoginComponent } from './pages/login/login.component';
 /** services */
 @NgModule({
-	declarations: [AppComponent, HomeComponent, MenuComponent, NotFoundComponent],
+	declarations: [AppComponent, HomeComponent, MenuComponent, NotFoundComponent, LoginComponent],
 	imports: [
 		BrowserModule,
 		AppRoutingModule,

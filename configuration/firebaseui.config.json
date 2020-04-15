@@ -1,0 +1,6 @@
+{
+	"signInSuccessUrl": "home",
+	"signInOptions": [],
+	"tosUrl": "term-of-service",
+	"privacyPolicyUrl": "privacy-policy"
+}

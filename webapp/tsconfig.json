@@ -12,11 +12,13 @@
 		"importHelpers": true,
 		"target": "es2015",
 		"lib": ["es2018", "dom"],
+		"resolveJsonModule": true,
 		"paths": {
 			"@services/*": ["src/app/services/*"],
 			"@components/*": ["src/app/components/*"],
 			"@pages/*": ["src/app/pages/*"],
-			"@models/*": ["../models/*"]
+			"@models/*": ["../models/*"],
+			"@config/*": ["../configuration/*"]
 		}
 	},
 	"angularCompilerOptions": {
