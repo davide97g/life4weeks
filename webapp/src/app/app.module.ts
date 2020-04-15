@@ -14,9 +14,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { LoginComponent } from './pages/login/login.component';
+import { PersonalAreaComponent } from './pages/personal-area/personal-area.component';
+import { TermsOfServiceComponent } from './pages/terms-of-service/terms-of-service.component';
+import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.component';
+import { CalendarComponent } from './pages/calendar/calendar.component';
+import { DiaryComponent } from './pages/diary/diary.component';
 /** services */
 @NgModule({
-	declarations: [AppComponent, HomeComponent, MenuComponent, NotFoundComponent, LoginComponent],
+	declarations: [AppComponent, HomeComponent, MenuComponent, NotFoundComponent, LoginComponent, PersonalAreaComponent, TermsOfServiceComponent, PrivacyPolicyComponent, CalendarComponent, DiaryComponent],
 	imports: [
 		BrowserModule,
 		AppRoutingModule,
