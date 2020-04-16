@@ -16,6 +16,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
 /** pages */
 import { NotFoundComponent } from '@pages/not-found/not-found.component';
 import { HomeComponent } from '@pages/home/home.component';
@@ -58,6 +59,7 @@ import { UtilsService } from '@services/utils/utils.service';
 		MatDatepickerModule,
 		MatStepperModule,
 		ReactiveFormsModule,
+		MatSelectModule,
 	],
 	providers: [
 		CoreService,
