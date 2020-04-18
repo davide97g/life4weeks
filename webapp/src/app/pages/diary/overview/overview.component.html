@@ -12,7 +12,12 @@
 	<mat-card-content id="notes-view">
 		<h2>✍️ Last notes</h2>
 		<mat-card-actions>
-			<mat-radio-group [(ngModel)]="order" (ngModelChange)="orderNotes()" color="primary">
+			<mat-radio-group
+				*ngIf="filterWithNotes(records).length"
+				[(ngModel)]="order"
+				(ngModelChange)="orderNotes()"
+				color="primary"
+			>
 				Order your notes:
 				<mat-radio-button class="radio-button" [value]="'desc'">Last</mat-radio-button>
 				<mat-radio-button class="radio-button" [value]="'asc'">First</mat-radio-button>
@@ -27,7 +32,10 @@
 				{{ record.notes }}
 			</mat-card-content>
 			<mat-card-subtitle class="card-note-emoji-date">
-				{{ record.emotion.emoji }} {{ formatDate(record.date) }}
+				<span>{{ record.emotion.emoji }} {{ formatDate(record.date) }}</span>
+				<button mat-icon-button (click)="deleteRecord(record)">
+					<mat-icon>delete</mat-icon>
+				</button>
 			</mat-card-subtitle>
 		</mat-card>
 	</mat-card-content>

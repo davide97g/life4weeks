@@ -88,7 +88,7 @@ export class NewRecordComponent implements OnInit {
 	findDate(record: Record) {
 		// console.info('findDate');
 		// if (!record || !record.date) return;
-		// let date = new Date(record.date).toLocaleDateString();
+		// let date = new Date(record.date).toUTCString();
 		// // console.info('input date', date);
 		// // console.table(this.records, 'date');
 		// this.records.forEach((r: Record) => {

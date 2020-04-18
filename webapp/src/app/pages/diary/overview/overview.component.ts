@@ -37,6 +37,13 @@ export class OverviewComponent implements OnInit {
 		return new Date(date).toLocaleDateString();
 	}
 
+	deleteRecord(record: Record) {
+		console.info('delete ', record);
+		let i = this.records.findIndex((r: Record) => r.date == record.date);
+		this.records.splice(i, 1);
+		this.calendar.updateTodaysDate(); // update calendar view
+	}
+
 	orderNotes() {
 		if (this.order == 'desc')
 			this.records = this.records.sort((a: Record, b: Record) =>
