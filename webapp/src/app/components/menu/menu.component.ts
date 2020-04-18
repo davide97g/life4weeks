@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '@services/auth/auth.service';
 
 @Component({
 	selector: 'app-menu',
@@ -8,15 +9,7 @@ import { Router } from '@angular/router';
 })
 export class MenuComponent implements OnInit {
 	title: string = 'Life in Weeks';
-	constructor(private router: Router) {}
+	constructor(public router: Router, public auth: AuthService) {}
 
 	ngOnInit(): void {}
-
-	clickTest(page: string) {
-		console.info('you clicked: ' + page);
-	}
-
-	goTo(page: string) {
-		this.router.navigateByUrl(page);
-	}
 }
