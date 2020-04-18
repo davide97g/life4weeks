@@ -5,6 +5,7 @@ import { Emotion } from '@models/emotion/emotion';
 import { Record } from '@models/record';
 import { EmotionService } from '@services/emotion/emotion.service';
 import { MatHorizontalStepper } from '@angular/material/stepper';
+import { DiaryService } from '@services/diary/diary.service';
 
 @Component({
 	selector: 'app-new-record',
@@ -26,7 +27,11 @@ export class NewRecordComponent implements OnInit {
 		return record ? record.emotion.text : '';
 	};
 	@ViewChild('stepper') stepper: MatHorizontalStepper;
-	constructor(private fb: FormBuilder, private emotionService: EmotionService) {
+	constructor(
+		private fb: FormBuilder,
+		private emotionService: EmotionService,
+		private diaryService: DiaryService
+	) {
 		this.maxDate = new Date();
 		this.emotions = this.emotionService.getEmotions();
 	}
@@ -90,6 +95,7 @@ export class NewRecordComponent implements OnInit {
 			).toLocaleDateString();
 			console.info(this.recordFormGroup.value);
 			this.records.push(this.recordFormGroup.value);
+			this.diaryService.records.next(this.records);
 			this.recordFormGroup.reset();
 			this.stepper.reset();
 			this.spinnerMode = 'determinate';
