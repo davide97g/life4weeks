@@ -18,6 +18,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatRadioModule } from '@angular/material/radio';
 /** pages */
 import { NotFoundComponent } from '@pages/not-found/not-found.component';
 import { HomeComponent } from '@pages/home/home.component';
@@ -68,6 +69,7 @@ import { OverviewComponent } from '@pages/diary/overview/overview.component';
 		ReactiveFormsModule,
 		MatSelectModule,
 		MatProgressBarModule,
+		MatRadioModule,
 	],
 	providers: [
 		CoreService,

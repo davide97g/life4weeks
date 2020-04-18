@@ -7,6 +7,26 @@ import { EmotionService } from '@services/emotion/emotion.service';
 import { MatHorizontalStepper } from '@angular/material/stepper';
 import { DiaryService } from '@services/diary/diary.service';
 
+const test_records: Record[] = [
+	{
+		date: 'Tue, 07 Apr 2020 22:00:00 GMT',
+		emotion: { text: 'angry', emoji: '😠', color: '#db642d' },
+		notes:
+			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sit amet molestie dui, id varius mi. Vivamus dapibus sollicitudin est, ut egestas mi posuere sed. Donec lacinia lorem non leo laoreet convallis. Sed fringilla rhoncus augue et vulputate. Phasellus sed ipsum urna. Nullam arcu augue, fringilla vitae orci ac, finibus consectetur elit.',
+	},
+	{
+		date: 'Sun, 12 Apr 2020 22:00:00 GMT',
+		emotion: { text: 'energetic', emoji: '😎', color: '#ffd740' },
+		notes:
+			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sit amet molestie dui, id varius mi. Vivamus dapibus sollicitudin est, ut egestas mi posuere sed. Donec lacinia lorem non leo laoreet convallis.',
+	},
+	{
+		date: 'Thu, 16 Apr 2020 22:00:00 GMT',
+		emotion: { text: 'happy', emoji: '😄', color: '#95fc95' },
+		notes: 'Lorem ipsum dolor sit amet',
+	},
+];
+
 @Component({
 	selector: 'app-new-record',
 	templateUrl: './new-record.component.html',
@@ -14,7 +34,7 @@ import { DiaryService } from '@services/diary/diary.service';
 	encapsulation: ViewEncapsulation.None,
 })
 export class NewRecordComponent implements OnInit {
-	records: Record[] = [];
+	records: Record[] = test_records;
 	emotions: Emotion[];
 	minDate: Date;
 	maxDate: Date;
@@ -22,7 +42,7 @@ export class NewRecordComponent implements OnInit {
 	percentage: number;
 	spinnerMode: string = 'determinate';
 	dateClass: Function = (d: Date): MatCalendarCellCssClasses => {
-		const date = d.toLocaleDateString();
+		const date = d.toUTCString();
 		let record = this.records.find((record: Record) => record.date === date);
 		return record ? record.emotion.text : '';
 	};
@@ -42,6 +62,7 @@ export class NewRecordComponent implements OnInit {
 			emotion: [null, [Validators.required]],
 			notes: null,
 		});
+		this.diaryService.records.next(this.records);
 		this.recordFormGroup.valueChanges.subscribe((record: Record) => {
 			this.percentage = 0;
 			if (record.date) this.percentage += 33;
@@ -92,7 +113,7 @@ export class NewRecordComponent implements OnInit {
 		setTimeout(() => {
 			this.recordFormGroup.value.date = new Date(
 				this.recordFormGroup.value.date
-			).toLocaleDateString();
+			).toUTCString();
 			console.info(this.recordFormGroup.value);
 			this.records.push(this.recordFormGroup.value);
 			this.diaryService.records.next(this.records);

@@ -10,8 +10,9 @@ import { MatCalendarCellCssClasses, MatCalendar } from '@angular/material/datepi
 })
 export class OverviewComponent implements OnInit {
 	records: Record[];
+	order: string = 'desc';
 	dateClass: Function = (d: Date): MatCalendarCellCssClasses => {
-		const date = d.toLocaleDateString();
+		const date = d.toUTCString();
 		let record = this.records.find((record: Record) => record.date === date);
 		return record ? record.emotion.text : '';
 	};
@@ -23,7 +24,27 @@ export class OverviewComponent implements OnInit {
 	ngOnInit(): void {
 		this.diaryService.records.subscribe((records: Record[]) => {
 			this.records = records;
-			this.calendar.updateTodaysDate(); // update calendar view
+			this.orderNotes();
+			if (this.calendar) this.calendar.updateTodaysDate(); // update calendar view
 		});
+	}
+
+	filterWithNotes(records: Record[]): Record[] {
+		return records.filter((record: Record) => (record.notes ? true : false));
+	}
+
+	formatDate(date: string): string {
+		return new Date(date).toLocaleDateString();
+	}
+
+	orderNotes() {
+		if (this.order == 'desc')
+			this.records = this.records.sort((a: Record, b: Record) =>
+				new Date(a.date) < new Date(b.date) ? 1 : -1
+			);
+		else if (this.order == 'asc')
+			this.records = this.records.sort((a: Record, b: Record) =>
+				new Date(a.date) > new Date(b.date) ? 1 : -1
+			);
 	}
 }
