@@ -31,6 +31,9 @@ import { MenuComponent } from '@components/menu/menu.component';
 /** services */
 import { CoreService } from '@services/core/core.service';
 import { UtilsService } from '@services/utils/utils.service';
+import { SearchComponent } from '@pages/diary/search/search.component';
+import { NewRecordComponent } from '@pages/diary/new-record/new-record.component';
+import { OverviewComponent } from '@pages/diary/overview/overview.component';
 @NgModule({
 	declarations: [
 		AppComponent,
@@ -43,6 +46,9 @@ import { UtilsService } from '@services/utils/utils.service';
 		PrivacyPolicyComponent,
 		CalendarComponent,
 		DiaryComponent,
+		SearchComponent,
+		NewRecordComponent,
+		OverviewComponent,
 	],
 	imports: [
 		BrowserModule,
