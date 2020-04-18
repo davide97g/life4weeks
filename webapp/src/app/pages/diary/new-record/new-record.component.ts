@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 import { Emotion } from '@models/emotion/emotion';
 import { Record } from '@models/record';
 import { EmotionService } from '@services/emotion/emotion.service';
+import { MatHorizontalStepper } from '@angular/material/stepper';
 
 @Component({
 	selector: 'app-new-record',
@@ -17,11 +18,14 @@ export class NewRecordComponent implements OnInit {
 	minDate: Date;
 	maxDate: Date;
 	recordFormGroup: FormGroup;
+	percentage: number;
+	spinnerMode: string = 'determinate';
 	dateClass: Function = (d: Date): MatCalendarCellCssClasses => {
 		const date = d.toLocaleDateString();
 		let record = this.records.find((record: Record) => record.date === date);
 		return record ? record.emotion.text : '';
 	};
+	@ViewChild('stepper') stepper: MatHorizontalStepper;
 	constructor(private fb: FormBuilder, private emotionService: EmotionService) {
 		this.maxDate = new Date();
 		this.emotions = this.emotionService.getEmotions();
@@ -32,6 +36,12 @@ export class NewRecordComponent implements OnInit {
 			date: [null, [Validators.required]],
 			emotion: [null, [Validators.required]],
 			notes: null,
+		});
+		this.recordFormGroup.valueChanges.subscribe((record: Record) => {
+			this.percentage = 0;
+			if (record.date) this.percentage += 33;
+			if (record.emotion) this.percentage += 34;
+			if (record.notes) this.percentage += 33;
 		});
 	}
 	get date() {
@@ -44,6 +54,11 @@ export class NewRecordComponent implements OnInit {
 		return this.recordFormGroup.get('notes');
 	}
 
+	/**
+	 * @description ricerca se la data che si è scelta è già parte di un record
+	 * e in quel caso carica le informazioni precedenti, per sovrascriverle
+	 * @param record record in inserimento
+	 */
 	findDate(record: Record) {
 		// console.info('findDate');
 		// if (!record || !record.date) return;
@@ -63,11 +78,21 @@ export class NewRecordComponent implements OnInit {
 		// });
 	}
 
+	/**
+	 * @description inserisce il nuovo record nel database
+	 */
 	newRecord() {
-		this.recordFormGroup.value.date = new Date(
-			this.recordFormGroup.value.date
-		).toLocaleDateString();
-		console.info(this.recordFormGroup.value);
-		this.records.push(this.recordFormGroup.value);
+		this.spinnerMode = 'indeterminate';
+		// ? da sostituire con la chiamata al database in scrittura
+		setTimeout(() => {
+			this.recordFormGroup.value.date = new Date(
+				this.recordFormGroup.value.date
+			).toLocaleDateString();
+			console.info(this.recordFormGroup.value);
+			this.records.push(this.recordFormGroup.value);
+			this.recordFormGroup.reset();
+			this.stepper.reset();
+			this.spinnerMode = 'determinate';
+		}, 2000);
 	}
 }
