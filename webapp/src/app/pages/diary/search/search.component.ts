@@ -15,6 +15,7 @@ export class SearchComponent implements OnInit {
 	emotions: Emotion[];
 	filters = ['date', 'emotion', 'notes'];
 	filter: string = this.filters[0];
+	keywords: string[] = [];
 	recordFormGroup: FormGroup;
 	constructor(
 		private diaryService: DiaryService,
@@ -47,5 +48,25 @@ export class SearchComponent implements OnInit {
 		console.info('search by ' + this.filter);
 		console.info(this[this.filter].value);
 		// console.info(this.records);
+	}
+
+	check() {
+		if (!this.notes.value) return;
+		let splitted_by_spaces: string[] = this.notes.value.split(' ');
+		let splitted_by_enters: string[] = this.notes.value.split('\n');
+		let keyword: string = null;
+		if (splitted_by_spaces.length > 1) keyword = splitted_by_spaces[0].trim();
+		if (splitted_by_enters.length > 1) keyword = splitted_by_enters[0].trim();
+		if (keyword == '') {
+			this.notes.setValue(null);
+		} else if (keyword !== null) {
+			this.keywords.push(keyword);
+			this.notes.setValue(null);
+		}
+	}
+
+	deleteTag(tag: string) {
+		let i: number = this.keywords.findIndex((keyword: string) => keyword == tag);
+		this.keywords.splice(i, 1);
 	}
 }
