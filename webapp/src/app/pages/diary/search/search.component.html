@@ -1,0 +1,65 @@
+<mat-card style="margin: 20px;" [class.mat-elevation-z5]="true">
+	<mat-card-title>
+		<h1>Search</h1>
+	</mat-card-title>
+	<mat-card-subtitle>
+		Search for a particular date, by selecting emotions or typings words
+	</mat-card-subtitle>
+	<mat-card-content>
+		<mat-radio-group [(ngModel)]="filter" color="primary">
+			<mat-radio-button
+				*ngFor="let filter of filters"
+				class="radio-button"
+				[value]="filter"
+				>{{ filter | titlecase }}</mat-radio-button
+			>
+		</mat-radio-group>
+	</mat-card-content>
+	<mat-card-content>
+		<form [formGroup]="recordFormGroup">
+			<mat-form-field *ngIf="filter == 'date'">
+				<mat-label>Select date</mat-label>
+				<input formControlName="date" matInput [matDatepicker]="picker" />
+				<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+				<mat-datepicker #picker></mat-datepicker>
+			</mat-form-field>
+			<mat-form-field *ngIf="filter == 'emotion'">
+				<mat-label>Select emotion</mat-label>
+				<mat-select formControlName="emotion">
+					<h3>
+						<mat-option *ngFor="let emotion of emotions" [value]="emotion">
+							{{ emotion.text | titlecase }} {{ emotion.emoji }}
+						</mat-option>
+					</h3>
+				</mat-select>
+			</mat-form-field>
+			<mat-form-field *ngIf="filter == 'notes'" class="big-width">
+				<mat-label>Type keywords</mat-label>
+				<textarea
+					(ngModelChange)="check()"
+					formControlName="notes"
+					matInput
+					placeholder="..."
+				></textarea>
+				<mat-card-header class="keyword-container">
+					<p class="energetic keyword" *ngFor="let keyword of keywords">
+						{{ keyword }}
+						<button mat-icon-button (click)="deleteTag(keyword)" class="keyword-button">
+							<mat-icon color="primary" class="keyword-icon">close</mat-icon>
+						</button>
+					</p>
+				</mat-card-header>
+			</mat-form-field>
+		</form>
+	</mat-card-content>
+	<mat-card-actions>
+		<button
+			mat-raised-button
+			color="primary"
+			[disabled]="!this[this.filter].value"
+			(click)="search()"
+		>
+			Search
+		</button>
+	</mat-card-actions>
+</mat-card>

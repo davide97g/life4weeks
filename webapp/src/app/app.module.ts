@@ -16,6 +16,9 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatRadioModule } from '@angular/material/radio';
 /** pages */
 import { NotFoundComponent } from '@pages/not-found/not-found.component';
 import { HomeComponent } from '@pages/home/home.component';
@@ -30,6 +33,9 @@ import { MenuComponent } from '@components/menu/menu.component';
 /** services */
 import { CoreService } from '@services/core/core.service';
 import { UtilsService } from '@services/utils/utils.service';
+import { SearchComponent } from '@pages/diary/search/search.component';
+import { NewRecordComponent } from '@pages/diary/new-record/new-record.component';
+import { OverviewComponent } from '@pages/diary/overview/overview.component';
 @NgModule({
 	declarations: [
 		AppComponent,
@@ -42,6 +48,9 @@ import { UtilsService } from '@services/utils/utils.service';
 		PrivacyPolicyComponent,
 		CalendarComponent,
 		DiaryComponent,
+		SearchComponent,
+		NewRecordComponent,
+		OverviewComponent,
 	],
 	imports: [
 		BrowserModule,
@@ -58,6 +67,9 @@ import { UtilsService } from '@services/utils/utils.service';
 		MatDatepickerModule,
 		MatStepperModule,
 		ReactiveFormsModule,
+		MatSelectModule,
+		MatProgressBarModule,
+		MatRadioModule,
 	],
 	providers: [
 		CoreService,
