@@ -1,0 +1,45 @@
+<mat-card [class.mat-elevation-z0]="true">
+	<mat-card-title>
+		<h1>Overview</h1>
+	</mat-card-title>
+	<mat-card-subtitle>
+		Here you can view your diary summarized. Toggle between different views
+	</mat-card-subtitle>
+	<mat-card-content id="calendar-view">
+		<h2>📅 Calendar</h2>
+		<mat-calendar [dateClass]="dateClass" id="calendar" #calendar></mat-calendar>
+	</mat-card-content>
+	<mat-card-content id="notes-view">
+		<h2>✍️ Last notes</h2>
+		<mat-card-actions>
+			<mat-radio-group
+				*ngIf="filterWithNotes(records).length"
+				[(ngModel)]="order"
+				(ngModelChange)="orderNotes()"
+				color="primary"
+			>
+				Order your notes:
+				<mat-radio-button class="radio-button" [value]="'desc'">Last</mat-radio-button>
+				<mat-radio-button class="radio-button" [value]="'asc'">First</mat-radio-button>
+			</mat-radio-group>
+		</mat-card-actions>
+		<mat-card-actions class="notes-container">
+			<mat-card
+				*ngFor="let record of filterWithNotes(records)"
+				class="card-note"
+				[class.mat-elevation-z3]="true"
+				[class]="record.emotion.text"
+			>
+				<mat-card-content class="card-note-text">
+					{{ record.notes }}
+				</mat-card-content>
+				<mat-card-subtitle class="card-note-emoji-date">
+					<span>{{ record.emotion.emoji }} {{ formatDate(record.date) }}</span>
+					<button mat-icon-button (click)="deleteRecord(record)">
+						<mat-icon>delete</mat-icon>
+					</button>
+				</mat-card-subtitle>
+			</mat-card>
+		</mat-card-actions>
+	</mat-card-content>
+</mat-card>
