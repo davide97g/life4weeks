@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "life-4-weeks": {
+      "hosting": {
+        "webapp": [
+          "life-4-weeks"
+        ]
+      }
+    }
+  }
+}

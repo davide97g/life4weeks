@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CoreService } from '@services/core/core.service';
+import { AuthService } from '@services/auth/auth.service';
 
 @Component({
 	selector: 'app-login',
@@ -7,9 +7,9 @@ import { CoreService } from '@services/core/core.service';
 	styleUrls: ['./login.component.sass'],
 })
 export class LoginComponent implements OnInit {
-	constructor(private core: CoreService) {}
+	constructor(private auth: AuthService) {}
 
 	ngOnInit(): void {
-		this.core.startUi();
+		this.auth.startUi();
 	}
 }

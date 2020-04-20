@@ -1,16 +1,33 @@
 <mat-toolbar color="accent">
-	<span (click)="goTo('home')">
+	<span (click)="router.navigateByUrl('home')">
 		<h1>{{ title }}</h1>
 	</span>
 	<span class="fill-remaining-space"></span>
 	<span>
-		<!-- button examples -->
-		<button color="primary" mat-stroked-button (click)="goTo('calendar')">Calendar</button>
-		<button color="primary" mat-stroked-button (click)="goTo('diary')">Diary</button>
-		<button color="primary" mat-stroked-button (click)="goTo('login')">Login</button>
-		<button color="primary" mat-stroked-button>Logout</button>
-		<button color="primary" mat-stroked-button (click)="goTo('personal-area')">
-			Personal Area
-		</button>
+		<div *ngIf="auth.user$ | async; then authenticated; else guest"></div>
+		<ng-template #guest>
+			<button color="primary" mat-button (click)="router.navigateByUrl('login')">
+				<mat-icon color="primary">input</mat-icon>
+				Login
+			</button>
+		</ng-template>
+		<ng-template #authenticated>
+			<button color="primary" mat-button (click)="router.navigateByUrl('calendar')">
+				Calendar
+				<mat-icon color="primary">calendar_today</mat-icon>
+			</button>
+			<button color="primary" mat-button (click)="router.navigateByUrl('diary')">
+				Diary
+				<mat-icon color="primary">book</mat-icon>
+			</button>
+			<button color="primary" mat-button (click)="router.navigateByUrl('personal-area')">
+				Personal Area
+				<mat-icon color="primary">person</mat-icon>
+			</button>
+			<button color="primary" mat-button (click)="auth.signOut()">
+				Sign out
+				<mat-icon color="primary">exit_to_app</mat-icon>
+			</button>
+		</ng-template>
 	</span>
 </mat-toolbar>

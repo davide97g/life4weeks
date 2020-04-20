@@ -33,9 +33,27 @@ import { MenuComponent } from '@components/menu/menu.component';
 /** services */
 import { CoreService } from '@services/core/core.service';
 import { UtilsService } from '@services/utils/utils.service';
+
+/** @angular/fire */
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+
+const config = {
+	apiKey: 'AIzaSyCNSJuQECpfGQKEnAjjQ5fDQLQAYq9m3Go',
+	authDomain: 'life-4-weeks.firebaseapp.com',
+	databaseURL: 'https://life-4-weeks.firebaseio.com',
+	projectId: 'life-4-weeks',
+	storageBucket: 'life-4-weeks.appspot.com',
+	messagingSenderId: '958281435817',
+	appId: '1:958281435817:web:561db3c0aa8ac456bd77b8',
+	measurementId: 'G-0TN1VDT32Z',
+};
+
 import { SearchComponent } from '@pages/diary/search/search.component';
 import { NewRecordComponent } from '@pages/diary/new-record/new-record.component';
 import { OverviewComponent } from '@pages/diary/overview/overview.component';
+
 @NgModule({
 	declarations: [
 		AppComponent,
@@ -67,6 +85,9 @@ import { OverviewComponent } from '@pages/diary/overview/overview.component';
 		MatDatepickerModule,
 		MatStepperModule,
 		ReactiveFormsModule,
+		AngularFireModule.initializeApp(config),
+		AngularFirestoreModule,
+		AngularFireAuthModule,
 		MatSelectModule,
 		MatProgressBarModule,
 		MatRadioModule,
