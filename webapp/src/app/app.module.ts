@@ -53,6 +53,9 @@ const config = {
 import { SearchComponent } from '@pages/diary/search/search.component';
 import { NewRecordComponent } from '@pages/diary/new-record/new-record.component';
 import { OverviewComponent } from '@pages/diary/overview/overview.component';
+import { SettingsComponent } from './pages/personal-area/settings/settings.component';
+import { StatsComponent } from './pages/personal-area/stats/stats.component';
+import { ProfileComponent } from './pages/personal-area/profile/profile.component';
 
 @NgModule({
 	declarations: [
@@ -69,6 +72,9 @@ import { OverviewComponent } from '@pages/diary/overview/overview.component';
 		SearchComponent,
 		NewRecordComponent,
 		OverviewComponent,
+		SettingsComponent,
+		StatsComponent,
+		ProfileComponent,
 	],
 	imports: [
 		BrowserModule,
