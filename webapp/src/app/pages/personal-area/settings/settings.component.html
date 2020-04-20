@@ -1,6 +1,18 @@
-<mat-card>
+<mat-card style="margin: auto 10px;" [class.mat-elevation-z6]="true">
 	<mat-card-title>
 		<h2>Settings</h2>
 	</mat-card-title>
 	<mat-card-subtitle>Edit your preferences</mat-card-subtitle>
+	<mat-card-content>
+		<mat-chip-list #chipList aria-label="Fruit selection">
+			<mat-chip *ngFor="let emotion of emotions" [background]="emotion.color">
+				{{ emotion.emoji }} {{ emotion.text }}
+				<mat-icon
+					matChipTrailingIcon
+					(click)="utils.openSnackBar(emotion.text, emotion.emoji); openDialog(emotion)"
+					>edit</mat-icon
+				>
+			</mat-chip>
+		</mat-chip-list>
+	</mat-card-content>
 </mat-card>

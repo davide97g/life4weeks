@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '@services/auth/auth.service';
+import { UtilsService } from '@services/utils/utils.service';
 
 @Component({
 	selector: 'app-profile',
@@ -61,7 +62,7 @@ export class ProfileComponent implements OnInit {
 		'girl-9.png',
 	];
 	profilePic: string = this.avatars[3];
-	constructor(public auth: AuthService) {}
+	constructor(public auth: AuthService, public utils: UtilsService) {}
 
 	ngOnInit(): void {}
 }
