@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DiaryService } from '@services/diary/diary.service';
-import { Record } from '@models/record';
+import { Record } from '@models/record/';
 import { MatCalendarCellCssClasses, MatCalendar } from '@angular/material/datepicker';
 
 @Component({

@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Record } from '@models/record';
-import { records } from '@models/test-records';
 import { EmotionList, Emotion } from '@models/emotion/';
 import { UtilsService } from '@services/utils/utils.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -11,7 +9,6 @@ import { DialogEmotionColorComponent } from '@components/dialog-emotion-color/di
 	styleUrls: ['./settings.component.sass', '../../../../../../models/emotion/emotion.sass'],
 })
 export class SettingsComponent implements OnInit {
-	records: Record[] = records;
 	emotions: Emotion[] = EmotionList;
 	theme: Emotion = this.emotions[1];
 	constructor(public utils: UtilsService, private dialog: MatDialog) {}
