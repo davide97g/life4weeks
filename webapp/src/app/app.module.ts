@@ -23,6 +23,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatBadgeModule } from '@angular/material/badge';
 /** pages */
 import { NotFoundComponent } from '@pages/not-found/not-found.component';
 import { HomeComponent } from '@pages/home/home.component';
@@ -62,6 +63,7 @@ import { StatsComponent } from './pages/personal-area/stats/stats.component';
 import { ProfileComponent } from './pages/personal-area/profile/profile.component';
 import { DialogEmotionColorComponent } from './components/dialog-emotion-color/dialog-emotion-color.component';
 import { BackgroundColorDirective } from './directives/background-color.directive';
+import { DialogInfoComponent } from './components/dialog-info/dialog-info.component';
 
 @NgModule({
 	declarations: [
@@ -83,6 +85,7 @@ import { BackgroundColorDirective } from './directives/background-color.directiv
 		ProfileComponent,
 		DialogEmotionColorComponent,
 		BackgroundColorDirective,
+		DialogInfoComponent,
 	],
 	imports: [
 		BrowserModule,
@@ -109,6 +112,7 @@ import { BackgroundColorDirective } from './directives/background-color.directiv
 		MatSnackBarModule,
 		MatChipsModule,
 		MatDialogModule,
+		MatBadgeModule,
 	],
 	providers: [
 		CoreService,

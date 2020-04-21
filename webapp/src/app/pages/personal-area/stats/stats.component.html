@@ -1,6 +1,49 @@
-<mat-card style="margin: auto 10px;" [class.mat-elevation-z6]="true">
+<mat-card align="center" [class.mat-elevation-z0]="true">
 	<mat-card-title>
-		<h2>Stastistics</h2>
+		<h2>
+			Stastistics
+			<button mat-icon-button>
+				<mat-icon
+					#tooltip="matTooltip"
+					matTooltip="Click to know how these statistic are calculated"
+					matTooltipPosition="above"
+					matTooltipShowDelay="1000"
+					(click)="openDialog()"
+					>info</mat-icon
+				>
+			</button>
+		</h2>
 	</mat-card-title>
-	<mat-card-subtitle>See your numbers</mat-card-subtitle>
+	<mat-card-content>
+		<mat-card class="card-stats">
+			Starting date <strong>{{ startingDate | date: 'dd/MM/yyyy' }}</strong>
+		</mat-card>
+		<mat-card class="card-stats">
+			Total days <strong>{{ totalDays }}</strong>
+		</mat-card>
+		<mat-card class="card-stats">
+			Days recorded <strong>{{ percentage }} %</strong>
+			<button mat-icon-button color="primary" *ngIf="records.length !== totalDays">
+				<mat-icon
+					color="primary"
+					matTooltip="Insert new records"
+					matTooltipPosition="right"
+					matTooltipShowDelay="1000"
+					(click)="router.navigateByUrl('diary')"
+					>add</mat-icon
+				>
+			</button>
+			<button
+				mat-icon-button
+				*ngIf="records.length === totalDays"
+				matTooltip="Great! You registered every day"
+				matTooltipPosition="right"
+				matTooltipShowDelay="1000"
+			>
+				💎
+			</button>
+
+			<mat-progress-bar [value]="percentage"></mat-progress-bar>
+		</mat-card>
+	</mat-card-content>
 </mat-card>

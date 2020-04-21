@@ -3,7 +3,7 @@
 		<h2>Settings</h2>
 	</mat-card-title>
 	<mat-card-content>
-		<mat-card [class.mat-elevation-z2]="true">
+		<mat-card class="card-settings" [class.mat-elevation-z2]="true">
 			<mat-card-subtitle>Edit the <strong>color of emotions</strong></mat-card-subtitle>
 			<mat-card-content>
 				<mat-chip-list #chipList aria-label="Emotion-color selection">
@@ -20,7 +20,7 @@
 				</mat-chip-list>
 			</mat-card-content>
 		</mat-card>
-		<mat-card [background]="theme.color">
+		<mat-card class="card-settings" [background]="theme.color">
 			<mat-card-subtitle> Edit the <strong>theme</strong> </mat-card-subtitle>
 			<mat-card-content>
 				<mat-radio-group [(ngModel)]="theme" color="primary">
