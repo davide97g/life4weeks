@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Emotion } from '@models/emotion/emotion';
+import { Emotion, Original } from '@models/emotion/';
 
 @Component({
 	selector: 'app-dialog-emotion-color',
@@ -13,7 +13,7 @@ export class DialogEmotionColorComponent implements OnInit {
 		public dialogRef: MatDialogRef<DialogEmotionColorComponent>,
 		@Inject(MAT_DIALOG_DATA) public emotion: Emotion
 	) {
-		this.original = emotion.color;
+		this.original = Original.find((em: Emotion) => em.text === emotion.text).color;
 	}
 
 	ngOnInit(): void {}

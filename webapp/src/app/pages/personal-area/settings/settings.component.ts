@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Record } from '@models/record';
 import { records } from '@models/test-records';
-import { EmotionList, Emotion } from '@models/emotion/emotion';
+import { EmotionList, Emotion } from '@models/emotion/';
 import { UtilsService } from '@services/utils/utils.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogEmotionColorComponent } from '@components/dialog-emotion-color/dialog-emotion-color.component';
-
 @Component({
 	selector: 'app-settings',
 	templateUrl: './settings.component.html',
@@ -14,9 +13,8 @@ import { DialogEmotionColorComponent } from '@components/dialog-emotion-color/di
 export class SettingsComponent implements OnInit {
 	records: Record[] = records;
 	emotions: Emotion[] = EmotionList;
-	animal: string;
-	name: string;
-	constructor(public utils: UtilsService, public dialog: MatDialog) {}
+	theme: Emotion = this.emotions[1];
+	constructor(public utils: UtilsService, private dialog: MatDialog) {}
 
 	ngOnInit(): void {}
 

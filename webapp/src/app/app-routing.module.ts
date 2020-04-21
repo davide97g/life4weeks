@@ -9,8 +9,8 @@ import { TermsOfServiceComponent } from '@pages/terms-of-service/terms-of-servic
 import { DiaryComponent } from '@pages/diary/diary.component';
 import { CalendarComponent } from '@pages/calendar/calendar.component';
 /** guards */
-import { AuthGuard } from './guards/auth.guard';
-import { LoggedGuard } from './guards/logged.guard';
+import { AuthGuard } from '@guards/auth.guard';
+import { LoggedGuard } from '@guards/logged.guard';
 const routes: Routes = [
 	{ path: 'login', component: LoginComponent, canActivate: [LoggedGuard] },
 	{ path: 'home', component: HomeComponent },
