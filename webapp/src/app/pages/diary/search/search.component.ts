@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { DiaryService } from '@services/diary/diary.service';
-import { Record } from '@models/record';
-import { Emotion } from '@models/emotion/emotion';
+import { Record, records } from '@models/record/';
+import { Emotion } from '@models/emotion/';
 import { EmotionService } from '@services/emotion/emotion.service';
 
 @Component({
@@ -23,10 +23,7 @@ export class SearchComponent implements OnInit {
 		private fb: FormBuilder
 	) {}
 	ngOnInit(): void {
-		// ! not working, it's too late
-		this.diaryService.records.subscribe((records: Record[]) => {
-			this.records = records;
-		});
+		this.records = records;
 		this.emotions = this.emotionService.getEmotions();
 		this.recordFormGroup = this.fb.group({
 			date: [null, [Validators.required]],

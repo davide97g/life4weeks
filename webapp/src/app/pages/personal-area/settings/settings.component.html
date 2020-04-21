@@ -1,0 +1,37 @@
+<mat-card style="margin: auto 10px;" [class.mat-elevation-z0]="true">
+	<mat-card-title>
+		<h2>Settings</h2>
+	</mat-card-title>
+	<mat-card-content>
+		<mat-card [class.mat-elevation-z2]="true">
+			<mat-card-subtitle>Edit the <strong>color of emotions</strong></mat-card-subtitle>
+			<mat-card-content>
+				<mat-chip-list #chipList aria-label="Emotion-color selection">
+					<mat-chip *ngFor="let emotion of emotions" [background]="emotion.color">
+						{{ emotion.emoji }} {{ emotion.text }}
+						<mat-icon
+							matChipTrailingIcon
+							(click)="
+								utils.openSnackBar(emotion.text, emotion.emoji); openDialog(emotion)
+							"
+							>edit</mat-icon
+						>
+					</mat-chip>
+				</mat-chip-list>
+			</mat-card-content>
+		</mat-card>
+		<mat-card [background]="theme.color">
+			<mat-card-subtitle> Edit the <strong>theme</strong> </mat-card-subtitle>
+			<mat-card-content>
+				<mat-radio-group [(ngModel)]="theme" color="primary">
+					<mat-radio-button
+						*ngFor="let theme of emotions"
+						class="radio-button"
+						[value]="theme"
+						>{{ theme.text | titlecase }}</mat-radio-button
+					>
+				</mat-radio-group>
+			</mat-card-content>
+		</mat-card>
+	</mat-card-content>
+</mat-card>

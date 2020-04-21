@@ -1,4 +1,4 @@
-import { Emotion } from './emotion/emotion';
+import { Emotion } from '../emotion/emotion';
 export interface Record {
 	date: string;
 	emotion: Emotion;

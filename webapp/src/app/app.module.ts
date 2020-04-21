@@ -19,6 +19,10 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatDialogModule } from '@angular/material/dialog';
 /** pages */
 import { NotFoundComponent } from '@pages/not-found/not-found.component';
 import { HomeComponent } from '@pages/home/home.component';
@@ -53,6 +57,11 @@ const config = {
 import { SearchComponent } from '@pages/diary/search/search.component';
 import { NewRecordComponent } from '@pages/diary/new-record/new-record.component';
 import { OverviewComponent } from '@pages/diary/overview/overview.component';
+import { SettingsComponent } from './pages/personal-area/settings/settings.component';
+import { StatsComponent } from './pages/personal-area/stats/stats.component';
+import { ProfileComponent } from './pages/personal-area/profile/profile.component';
+import { DialogEmotionColorComponent } from './components/dialog-emotion-color/dialog-emotion-color.component';
+import { BackgroundColorDirective } from './directives/background-color.directive';
 
 @NgModule({
 	declarations: [
@@ -69,6 +78,11 @@ import { OverviewComponent } from '@pages/diary/overview/overview.component';
 		SearchComponent,
 		NewRecordComponent,
 		OverviewComponent,
+		SettingsComponent,
+		StatsComponent,
+		ProfileComponent,
+		DialogEmotionColorComponent,
+		BackgroundColorDirective,
 	],
 	imports: [
 		BrowserModule,
@@ -91,6 +105,10 @@ import { OverviewComponent } from '@pages/diary/overview/overview.component';
 		MatSelectModule,
 		MatProgressBarModule,
 		MatRadioModule,
+		MatTooltipModule,
+		MatSnackBarModule,
+		MatChipsModule,
+		MatDialogModule,
 	],
 	providers: [
 		CoreService,

@@ -1,0 +1,81 @@
+<mat-card *ngIf="auth.user$ | async as user" align="center" [class.mat-elevation-z0]="true">
+	<mat-card-title><h2>Profile</h2></mat-card-title>
+	<mat-card-subtitle>
+		{{ user.displayName }}
+		<button mat-icon-button mat-raised-button id="edit-button" color="primary">
+			<mat-icon color="accent" id="edit-icon">edit</mat-icon>
+		</button>
+	</mat-card-subtitle>
+	<mat-card-content>
+		<img
+			id="photoURL"
+			src="{{ profilePic !== '' ? 'assets/avatars/' + profilePic : user.photoURL }}"
+			alt=""
+			matTooltip="{{ profilePic }}"
+			matTooltipPosition="right"
+			matTooltipShowDelay="1000"
+		/>
+		<mat-card-actions>
+			<button
+				mat-raised-button
+				color="accent"
+				[disabled]="edit"
+				(click)="edit = true"
+				matTooltip="Edit the profile pic"
+				matTooltipPosition="left"
+				matTooltipShowDelay="1000"
+			>
+				Edit
+			</button>
+			<button
+				mat-raised-button
+				color="primary"
+				[disabled]="!edit"
+				(click)="edit = false; utils.openSnackBar('User profile', 'Updated')"
+				matTooltip="Save the profile pic"
+				matTooltipPosition="right"
+				matTooltipShowDelay="1000"
+			>
+				Save
+			</button>
+		</mat-card-actions>
+	</mat-card-content>
+	<mat-card-subtitle>
+		<strong>Account created:</strong>
+		{{ user.metadata.creationTime | date: 'dd/M/yyyy' }}
+	</mat-card-subtitle>
+	<mat-card-subtitle>
+		<strong>Last sign-in:</strong>
+		{{ user.metadata.lastSignInTime | date: 'dd/M/yyyy' }}
+	</mat-card-subtitle>
+	<mat-card-actions *ngIf="edit">
+		<mat-form-field>
+			<mat-select [(value)]="profilePic" style="text-align: center; border-radius: 100%;">
+				<mat-select-trigger
+					><img
+						class="avatar-pic"
+						src="assets/avatars/{{ profilePic }}"
+						alt="{{ profilePic }}"
+				/></mat-select-trigger>
+				<h3 style="text-align: center;">
+					<mat-option
+						class="mat-option-avatar"
+						*ngFor="let avatar of avatars"
+						[value]="avatar"
+					>
+						<img
+							class="avatar-pic"
+							src="assets/avatars/{{ avatar }}"
+							alt="{{ avatar }}"
+						/>
+					</mat-option>
+				</h3>
+			</mat-select>
+		</mat-form-field>
+		<h6>
+			Icons made by
+			<a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from
+			<a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
+		</h6>
+	</mat-card-actions>
+</mat-card>
