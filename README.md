@@ -1,8 +1,16 @@
 # life4weeks
 
-![Firebase Functions](https://github.com/davide97g/life4weeks/workflows/Firebase%20Deploy%20Functions/badge.svg?branch=master) ![Firebase Hosting](https://github.com/davide97g/life4weeks/workflows/Firebase%20Deploy%20Hosting/badge.svg?branch=master&event=push)
+![Firebase project](https://img.shields.io/badge/firebase-project-orange?style=flat&logo=firebase)
+![Angular webapp](https://img.shields.io/badge/angular-webapp-red?style=flat&logo=angular)
+![GitHub repo size](https://img.shields.io/github/repo-size/davide97g/life4weeks)
 
-Webapp for life4weeks project
+![GitHub](https://img.shields.io/github/license/davide97g/life4weeks)
+![GitHub contributors](https://img.shields.io/github/contributors/davide97g/life4weeks)
+
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/davide97g/life4weeks/Build%20Webapp)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/davide97g/life4weeks/Build%20Functions)
+
+![Firebase Functions](https://github.com/davide97g/life4weeks/workflows/Firebase%20Deploy%20Functions/badge.svg?branch=master) ![Firebase Hosting](https://github.com/davide97g/life4weeks/workflows/Firebase%20Deploy%20Hosting/badge.svg?branch=master)
 
 ## Website
 
