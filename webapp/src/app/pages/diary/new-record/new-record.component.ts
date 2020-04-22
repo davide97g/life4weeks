@@ -10,7 +10,7 @@ import { DiaryService } from '@services/diary/diary.service';
 @Component({
 	selector: 'app-new-record',
 	templateUrl: './new-record.component.html',
-	styleUrls: ['./new-record.component.sass', '../../../../../../models/emotion/emotion.sass'],
+	styleUrls: ['./new-record.component.sass', '../../../../../../models/src/emotion/style.sass'],
 	encapsulation: ViewEncapsulation.None,
 })
 export class NewRecordComponent implements OnInit {

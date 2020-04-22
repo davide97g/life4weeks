@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { EmotionList, Emotion } from '@models/emotion/';
+import { EmotionList, Emotion } from '@models/emotion';
 import { UtilsService } from '@services/utils/utils.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogEmotionColorComponent } from '@components/dialog-emotion-color/dialog-emotion-color.component';
 @Component({
 	selector: 'app-settings',
 	templateUrl: './settings.component.html',
-	styleUrls: ['./settings.component.sass', '../../../../../../models/emotion/emotion.sass'],
+	styleUrls: ['./settings.component.sass', '../../../../../../models/src/emotion/style.sass'],
 })
 export class SettingsComponent implements OnInit {
 	emotions: Emotion[] = EmotionList;

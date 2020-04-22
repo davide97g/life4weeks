@@ -1,4 +1,25 @@
-import { Record } from './record';
+import { Emotion } from '../emotion';
+
+/**
+ * @interface Record
+ * @description Interface for the fundamental unit of information
+ * @param {date} string day of the record
+ * @param {emotion} Emotion how you felt that day
+ * @param {notes} string extra info about the day
+ * @author Davide Ghiotto
+ */
+export interface Record {
+	date: string;
+	emotion: Emotion;
+	notes: string;
+}
+
+/**
+ * @name records
+ * @constant
+ * @description test list of records (for develop mode only)
+ * @author Davide Ghiotto
+ */
 export const records: Record[] = [
 	{
 		date: 'Wed, 15 Apr 2020 22:00:00 GMT',

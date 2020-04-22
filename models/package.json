@@ -1,0 +1,16 @@
+{
+	"name": "models",
+	"version": "1.0.0",
+	"description": "Folder for the data modeling",
+	"main": "index.js",
+	"scripts": {
+		"lint": "tslint --project tsconfig.json",
+		"build": "tsc"
+	},
+	"author": "Davide Ghiotto",
+	"license": "ISC",
+	"devDependencies": {
+		"tslint": "^6.1.1",
+		"typescript": "^3.8.3"
+	}
+}

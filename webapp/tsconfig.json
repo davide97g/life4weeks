@@ -18,8 +18,7 @@
 			"@components/*": ["src/app/components/*"],
 			"@pages/*": ["src/app/pages/*"],
 			"@guards/*": ["src/app/guards/*"],
-			"@models/*": ["../models/*"],
-			"@config/*": ["../configuration/*"]
+			"@models/*": ["../models/src/*"]
 		}
 	},
 	"angularCompilerOptions": {
