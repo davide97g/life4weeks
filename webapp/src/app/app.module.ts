@@ -24,6 +24,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatBadgeModule } from '@angular/material/badge';
+import { MatTableModule } from '@angular/material/table';
 /** pages */
 import { NotFoundComponent } from '@pages/not-found/not-found.component';
 import { HomeComponent } from '@pages/home/home.component';
@@ -65,6 +66,7 @@ import { DialogEmotionColorComponent } from './components/dialog-emotion-color/d
 import { BackgroundColorDirective } from './directives/background-color.directive';
 import { DialogInfoComponent } from './components/dialog-info/dialog-info.component';
 import { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
 	declarations: [
@@ -115,6 +117,8 @@ import { ProgressBarComponent } from './components/progress-bar/progress-bar.com
 		MatChipsModule,
 		MatDialogModule,
 		MatBadgeModule,
+		MatTableModule,
+		MatPaginatorModule,
 	],
 	providers: [
 		CoreService,
