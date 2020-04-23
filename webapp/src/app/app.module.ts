@@ -64,6 +64,7 @@ import { ProfileComponent } from './pages/personal-area/profile/profile.componen
 import { DialogEmotionColorComponent } from './components/dialog-emotion-color/dialog-emotion-color.component';
 import { BackgroundColorDirective } from './directives/background-color.directive';
 import { DialogInfoComponent } from './components/dialog-info/dialog-info.component';
+import { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
 
 @NgModule({
 	declarations: [
@@ -86,6 +87,7 @@ import { DialogInfoComponent } from './components/dialog-info/dialog-info.compon
 		DialogEmotionColorComponent,
 		BackgroundColorDirective,
 		DialogInfoComponent,
+		ProgressBarComponent,
 	],
 	imports: [
 		BrowserModule,

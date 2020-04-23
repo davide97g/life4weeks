@@ -5,7 +5,7 @@ import { auth } from 'firebase/app';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import * as firebaseui from 'firebaseui';
 const config = {
@@ -21,7 +21,7 @@ const config = {
 export class AuthService {
 	user$: Observable<User>;
 	ui: firebaseui.auth.AuthUI = new firebaseui.auth.AuthUI(auth());
-
+	asyncOperation: Subject<boolean> = new Subject<boolean>();
 	constructor(
 		private afAuth: AngularFireAuth,
 		private afs: AngularFirestore,
@@ -30,6 +30,7 @@ export class AuthService {
 		// Get the auth state, then fetch the Firestore user document or return null
 		this.user$ = this.afAuth.authState.pipe(
 			switchMap(user => {
+				this.asyncOperation.next(false);
 				// Logged in
 				if (user) {
 					// return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
@@ -40,6 +41,13 @@ export class AuthService {
 				}
 			})
 		);
+	}
+
+	async readFromDatabase() {
+		this.asyncOperation.next(true);
+		let random: number = Math.random() * 2000;
+		console.info('readFromDatabase: ' + Math.round(random / 2) / 1000 + ' seconds');
+		setTimeout(() => this.asyncOperation.next(false), random);
 	}
 
 	// async googleSignin() {
