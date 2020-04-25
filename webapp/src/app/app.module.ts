@@ -67,6 +67,7 @@ import { BackgroundColorDirective } from './directives/background-color.directiv
 import { DialogInfoComponent } from './components/dialog-info/dialog-info.component';
 import { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
 	declarations: [
@@ -119,6 +120,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 		MatBadgeModule,
 		MatTableModule,
 		MatPaginatorModule,
+		MatSortModule,
 	],
 	providers: [
 		CoreService,
