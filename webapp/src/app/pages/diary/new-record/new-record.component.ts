@@ -1,11 +1,25 @@
 import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import {
+	FormBuilder,
+	FormGroup,
+	Validators,
+	FormControl,
+	AbstractControl,
+	ValidatorFn,
+} from '@angular/forms';
 import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 import { Emotion } from '@models/emotion/';
 import { Record, records } from '@models/record/';
 import { EmotionService } from '@services/emotion/emotion.service';
 import { MatHorizontalStepper } from '@angular/material/stepper';
 import { DiaryService } from '@services/diary/diary.service';
+
+export function forbiddenNameValidator(nameRe: RegExp): ValidatorFn {
+	return (control: AbstractControl): { [key: string]: any } | null => {
+		const forbidden = nameRe.test(control.value);
+		return forbidden ? { forbiddenName: { value: control.value } } : null;
+	};
+}
 
 @Component({
 	selector: 'app-new-record',
@@ -49,6 +63,12 @@ export class NewRecordComponent implements OnInit {
 			if (record.emotion) this.percentage += 34;
 			if (record.notes) this.percentage += 33;
 		});
+		// let testRecord: Record = {
+		// 	date: 'Thu, 16 Apr 2020 22:00:00 GMT',
+		// 	emotion: { text: 'happy', emoji: '😄', color: '#95fc95' },
+		// 	notes: 'weila',
+		// };
+		// this.findDate(testRecord);
 	}
 	get date() {
 		return this.recordFormGroup.get('date');
@@ -66,22 +86,19 @@ export class NewRecordComponent implements OnInit {
 	 * @param record record in inserimento
 	 */
 	findDate(record: Record) {
-		// console.info('findDate');
-		// if (!record || !record.date) return;
-		// let date = new Date(record.date).toUTCString();
-		// // console.info('input date', date);
-		// // console.table(this.records, 'date');
-		// this.records.forEach((r: Record) => {
-		// 	if (r.date === date) {
-		// 		console.info('record da inserire', r);
-		// 		console.info('found', this.recordFormGroup.value);
-		// 		this.recordFormGroup = this.fb.group({
-		// 			date: r.date,
-		// 			emotion: r.emotion,
-		// 			notes: r.notes,
-		// 		});
-		// 	}
-		// });
+		console.info('findDate');
+		if (!record || !record.date) return;
+		record.date = new Date(record.date).toUTCString();
+		let x: Record = this.records.find((r: Record) => r.date === record.date);
+		if (x) {
+			// console.info('found', x);
+			// found
+			this.recordFormGroup.setValue(
+				{ date: x.date, emotion: x.emotion, notes: x.notes },
+				{ emitEvent: false }
+			);
+			console.info(this.recordFormGroup);
+		}
 	}
 
 	/**
