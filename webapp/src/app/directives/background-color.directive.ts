@@ -37,11 +37,11 @@ export class BackgroundColorDirective implements AfterViewInit, OnChanges {
 		if (this.fullColor)
 			this.el.nativeElement.style.backgroundColor =
 				'rgba(' +
-				this.fullColor.R +
+				this.fullColor.rgba.R +
 				',' +
-				this.fullColor.G +
+				this.fullColor.rgba.G +
 				',' +
-				this.fullColor.B +
+				this.fullColor.rgba.B +
 				',' +
 				this.opacity +
 				')';

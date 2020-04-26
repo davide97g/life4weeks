@@ -7,7 +7,10 @@
 			<mat-card-subtitle>Edit the <strong>color of emotions</strong></mat-card-subtitle>
 			<mat-card-content>
 				<mat-chip-list #chipList aria-label="Emotion-color selection">
-					<mat-chip *ngFor="let emotion of emotions" [background]="emotion.color">
+					<mat-chip
+						*ngFor="let emotion of emotions"
+						[background]="emotion.color.rgba.value"
+					>
 						{{ emotion.emoji }} {{ emotion.text }}
 						<mat-icon
 							matChipTrailingIcon
@@ -20,7 +23,7 @@
 				</mat-chip-list>
 			</mat-card-content>
 		</mat-card>
-		<mat-card class="card-settings" [background]="theme.color">
+		<mat-card class="card-settings" [background]="theme.color.rgba.value">
 			<mat-card-subtitle> Edit the <strong>theme</strong> </mat-card-subtitle>
 			<mat-card-content>
 				<mat-radio-group [(ngModel)]="theme" color="primary">
