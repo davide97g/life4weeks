@@ -27,3 +27,14 @@ export interface User {
 	photoURL: string;
 	metadata: Metadata;
 }
+
+export const mocked: User = {
+	uid: '3NHoQl7UUGZuWtNV02QM',
+	email: 'test@gmail.com',
+	displayName: 'Bomber Test',
+	photoURL: 'no-one',
+	metadata: {
+		creationTime: '21/04/2020',
+		lastSignInTime: '27/04/2020',
+	},
+};

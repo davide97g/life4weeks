@@ -113,7 +113,7 @@
 
 					<mat-form-field class="full-width">
 						<mat-label>📅 Day</mat-label>
-						<input matInput [value]="date.value?.toLocaleString()" disabled />
+						<input matInput [value]="date.value?.toLocaleDateString()" disabled />
 						<mat-datepicker #overviewDate></mat-datepicker>
 					</mat-form-field>
 					<mat-form-field class="full-width">

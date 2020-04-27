@@ -6,7 +6,11 @@ import { Component, OnInit } from '@angular/core';
 	styleUrls: ['./diary.component.sass'],
 })
 export class DiaryComponent implements OnInit {
-	constructor() {}
+	constructor() {
+		console.info('diary');
+	}
+
+	// TODO centralizzare le chiamate in lettura al database in modo da leggere i dati il meno possibile
 
 	ngOnInit(): void {}
 }

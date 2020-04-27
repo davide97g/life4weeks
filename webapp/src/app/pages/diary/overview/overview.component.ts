@@ -1,7 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { DiaryService } from '@services/diary/diary.service';
 import { Record } from '@models/record/';
 import { MatCalendarCellCssClasses, MatCalendar } from '@angular/material/datepicker';
+import { AuthService } from '@services/auth/auth.service';
+
+function checkDate(utc: string, incomplete: Date): boolean {
+	let date = new Date(utc).toLocaleDateString();
+	return date == incomplete.toLocaleDateString();
+}
 
 @Component({
 	selector: 'app-overview',
@@ -9,20 +14,23 @@ import { MatCalendarCellCssClasses, MatCalendar } from '@angular/material/datepi
 	styleUrls: ['./overview.component.sass'],
 })
 export class OverviewComponent implements OnInit {
-	records: Record[];
+	records: Record[] = [];
 	order: string = 'desc';
+	startingDate: Date = new Date('04/15/2020');
 	dateClass: Function = (d: Date): MatCalendarCellCssClasses => {
-		const date = d.toUTCString();
-		let record = this.records.find((record: Record) => record.date === date);
-		return record ? record.emotion.text : '';
+		let record = this.records.find((record: Record) => {
+			return checkDate(record.date, d);
+		});
+		let classes: string = '';
+		if (checkDate(this.startingDate.toUTCString(), d)) classes += 'startingDate ';
+		if (record) classes += record.emotion.text;
+		return classes;
 	};
 	@ViewChild('calendar') calendar: MatCalendar<Date>;
-	constructor(private diaryService: DiaryService) {
-		this.records = [];
-	}
+	constructor(private auth: AuthService) {}
 
 	ngOnInit(): void {
-		this.diaryService.records.subscribe((records: Record[]) => {
+		this.auth.records$.subscribe((records: Record[]) => {
 			this.records = records;
 			this.orderNotes();
 			if (this.calendar) this.calendar.updateTodaysDate(); // update calendar view
