@@ -13,11 +13,6 @@
 		Record how you feel today, or register the emotions of another day
 	</mat-card-subtitle>
 	<mat-card-content>
-		<mat-progress-bar
-			*ngIf="percentage || spinnerMode == 'indeterminate'"
-			[(mode)]="spinnerMode"
-			[value]="percentage"
-		></mat-progress-bar>
 		<mat-horizontal-stepper [linear]="true" #stepper class="form">
 			<ng-template matStepperIcon="edit">
 				<mat-icon>insert_emoticon</mat-icon>

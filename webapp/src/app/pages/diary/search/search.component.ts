@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { DiaryService } from '@services/diary/diary.service';
 import { Record, records } from '@models/record/';
@@ -11,12 +11,12 @@ import { EmotionService } from '@services/emotion/emotion.service';
 	styleUrls: ['./search.component.sass'],
 })
 export class SearchComponent implements OnInit {
-	records: Record[];
 	emotions: Emotion[];
 	filters = ['date', 'emotion', 'notes'];
 	filter: string = this.filters[0];
 	keywords: string[] = [];
 	recordFormGroup: FormGroup;
+	records: Record[] = [];
 	constructor(
 		private diaryService: DiaryService,
 		private emotionService: EmotionService,
@@ -30,6 +30,7 @@ export class SearchComponent implements OnInit {
 			emotion: [null, [Validators.required]],
 			notes: null,
 		});
+		this.diaryService.records.subscribe((records: Record[]) => (this.records = records));
 	}
 	get date() {
 		return this.recordFormGroup.get('date');

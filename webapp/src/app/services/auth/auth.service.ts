@@ -3,7 +3,11 @@ import { Router } from '@angular/router';
 import { User } from '@models/user';
 import { auth } from 'firebase/app';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import {
+	AngularFirestore,
+	AngularFirestoreDocument,
+	AngularFirestoreCollection,
+} from '@angular/fire/firestore';
 
 import { Observable, of, Subject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
@@ -37,7 +41,7 @@ export class AuthService {
 				this.asyncOperation.next(false);
 				// Logged in
 				if (user) {
-					this.readRecords(mocked); // TODO da aggiornare con "user as User"
+					this.readRecords(user as User);
 					return of(user as User);
 				} else {
 					// Logged out
@@ -48,9 +52,10 @@ export class AuthService {
 	}
 
 	/**
-	 * devo salvarmi una copia locale e poi inviarla alle pagine che potrebbero essere in ascolto
+	 * Need to save a local copy of the records
 	 */
-	async readRecords(user: User): Promise<Record[]> {
+	private async readRecords(user: User) {
+		user = mocked; // ! remove this line when real data
 		console.info('readRecords');
 		this.asyncOperation.next(true);
 		let res = await this.afs
@@ -69,13 +74,13 @@ export class AuthService {
 				return [];
 			});
 		this.asyncOperation.next(false);
-		this.records$.next(res); // qui devo prima salvarmi la copia locale
-		return res;
+		this.records = res; // local copy
+		this.records$.next(this.records); // send to subscribers
 	}
 
 	async newRecord(user: User, record: Record): Promise<boolean> {
 		this.asyncOperation.next(true);
-		let res = await this.afs
+		let res: boolean = await this.afs
 			.collection('users')
 			.doc(user.uid)
 			.collection('records')
@@ -89,11 +94,40 @@ export class AuthService {
 		return res;
 	}
 
-	async readFromDatabase() {
+	async deleteRecord(user: User, record: Record): Promise<boolean> {
 		this.asyncOperation.next(true);
-		let random: number = Math.random() * 2000;
-		console.info('readFromDatabase: ' + Math.round(random / 2) / 1000 + ' seconds');
-		setTimeout(() => this.asyncOperation.next(false), random);
+		let res: boolean = false;
+		// records reference
+		let recordsRef = this.afs.collection('users').doc(user.uid).collection('records').ref;
+		// prepare query
+		let query = recordsRef.where('date', '==', record.date);
+		// find doc id with date == record.date
+		let id: string = await query
+			.get()
+			.then(found => {
+				if (!found) return null;
+				else {
+					if (found.docs.length > 1)
+						console.warn('more than one records found with date: ', record.date);
+					return found.docs[0].id; // me fido
+				}
+			})
+			.catch(err => {
+				console.error(err);
+				return null;
+			});
+		if (id)
+			// delete that doc
+			res = await recordsRef
+				.doc(id)
+				.delete()
+				.then(() => true) // unica possibilità di diventare "true"
+				.catch(err => {
+					console.error(err);
+					return false;
+				});
+		this.asyncOperation.next(false);
+		return res;
 	}
 
 	// async googleSignin() {
@@ -102,19 +136,21 @@ export class AuthService {
 	// 	return this.updateUserData(credential.user);
 	// }
 
-	// private updateUserData(user) {
-	// 	// Sets user data to firestore on login
-	// 	const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
+	private updateUserData(user: User) {
+		// Sets user data to firestore on login
+		// ! modify this line to point on the correct location
+		const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
 
-	// 	const data = {
-	// 		uid: user.uid,
-	// 		email: user.email,
-	// 		displayName: user.displayName,
-	// 		photoURL: user.photoURL,
-	// 	};
+		const data = {
+			uid: user.uid,
+			email: user.email,
+			displayName: user.displayName,
+			photoURL: user.photoURL,
+			metadata: user.metadata,
+		};
 
-	// 	return userRef.set(data, { merge: true });
-	// }
+		return userRef.set(data, { merge: true });
+	}
 
 	async signOut() {
 		await this.afAuth.signOut();

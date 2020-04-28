@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild, Input } from '@angular/core';
 import {
 	FormBuilder,
 	FormGroup,
@@ -15,6 +15,7 @@ import { MatHorizontalStepper } from '@angular/material/stepper';
 import { AuthService } from '@services/auth/auth.service';
 import { mocked } from '@models/user';
 import { UtilsService } from '@services/utils/utils.service';
+import { DiaryService } from '@services/diary/diary.service';
 
 export function forbiddenNameValidator(nameRe: RegExp): ValidatorFn {
 	return (control: AbstractControl): { [key: string]: any } | null => {
@@ -35,14 +36,13 @@ function checkDate(utc: string, incomplete: Date): boolean {
 	encapsulation: ViewEncapsulation.None,
 })
 export class NewRecordComponent implements OnInit {
-	records: Record[];
+	records: Record[] = [];
 	emotions: Emotion[];
 	minDate: Date;
 	maxDate: Date;
 	startingDate: Date = new Date('04/15/2020');
 	recordFormGroup: FormGroup;
 	percentage: number;
-	spinnerMode: string = 'determinate';
 	dateClass: Function = (d: Date): MatCalendarCellCssClasses => {
 		let record = this.records.find((record: Record) => {
 			return checkDate(record.date, d);
@@ -57,12 +57,12 @@ export class NewRecordComponent implements OnInit {
 		private fb: FormBuilder,
 		private emotionService: EmotionService,
 		public auth: AuthService,
-		private utils: UtilsService
+		private utils: UtilsService,
+		private diaryService: DiaryService
 	) {
-		console.info('new record');
 		this.maxDate = new Date();
 		this.emotions = this.emotionService.getEmotions();
-		this.auth.records$.subscribe((records: Record[]) => (this.records = records));
+		this.diaryService.records.subscribe((records: Record[]) => (this.records = records));
 	}
 
 	ngOnInit(): void {
@@ -121,7 +121,6 @@ export class NewRecordComponent implements OnInit {
 	newRecord() {
 		let record: Record = this.recordFormGroup.value;
 		record.date = new Date(record.date).toUTCString();
-		// chiamata al db
 		this.auth
 			.newRecord(mocked, record) // TODO cambiare la variabile mocked con un valore contenuto nel AuthService senza bisogno di passarlo dal component
 			.then((res: boolean) => {
