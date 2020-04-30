@@ -1,1 +1,25 @@
-<p>not-found works!</p>
+<mat-card align="center" [class.mat-elevation-z0]="true" id="not-found">
+	<h1
+		id="emoji"
+		matTooltip="Cool emoji right? Check emojipedia.org"
+		[matTooltipHideDelay]="500"
+		[matTooltipPosition]="'right'"
+		[matTooltipShowDelay]="500"
+	>
+		🦧
+	</h1>
+	<mat-card-title>Page not found </mat-card-title>
+	<mat-card-subtitle>The page your looking for does not exist</mat-card-subtitle>
+	<mat-card-actions>
+		<button
+			mat-stroked-button
+			matTooltip="go to homepage"
+			[matTooltipHideDelay]="500"
+			[matTooltipPosition]="'right'"
+			[matTooltipShowDelay]="500"
+			(click)="goToHomepage()"
+		>
+			Back to <strong>homepage</strong>
+		</button>
+	</mat-card-actions>
+</mat-card>
