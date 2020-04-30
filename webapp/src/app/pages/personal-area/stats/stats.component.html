@@ -45,5 +45,26 @@
 
 			<mat-progress-bar [value]="percentage"></mat-progress-bar>
 		</mat-card>
+		<mat-card class="card-graph">
+			<mat-card-subtitle>
+				See your data with these <strong>cool graphs!</strong>
+			</mat-card-subtitle>
+			<mat-card-content>
+				<!-- possibile error with undefined variable -->
+				<mat-radio-group
+					[(ngModel)]="type"
+					(ngModelChange)="changeType(type)"
+					color="primary"
+				>
+					<mat-radio-button
+						*ngFor="let t of graphTypes"
+						class="radio-button"
+						[value]="t"
+						>{{ t | titlecase }}</mat-radio-button
+					>
+				</mat-radio-group>
+				<canvas #polarArea></canvas>
+			</mat-card-content>
+		</mat-card>
 	</mat-card-content>
 </mat-card>
