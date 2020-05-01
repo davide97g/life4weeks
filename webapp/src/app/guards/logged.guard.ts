@@ -7,7 +7,7 @@ import {
 	Router,
 } from '@angular/router';
 
-import { AuthService } from '@services/auth/auth.service';
+import { AuthService } from '@services/auth.service';
 import { Observable } from 'rxjs';
 import { tap, map, take } from 'rxjs/operators';
 

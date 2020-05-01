@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { EmotionList, Emotion } from '@models/emotion';
-import { UtilsService } from '@services/utils/utils.service';
+import { UtilsService } from '@services/utils.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogEmotionColorComponent } from '@components/dialog-emotion-color/dialog-emotion-color.component';
+import { AuthService } from '@services/auth.service';
+import { Record } from '@models/record';
 @Component({
 	selector: 'app-settings',
 	templateUrl: './settings.component.html',
@@ -11,9 +13,12 @@ import { DialogEmotionColorComponent } from '@components/dialog-emotion-color/di
 export class SettingsComponent implements OnInit {
 	emotions: Emotion[] = EmotionList;
 	theme: Emotion = this.emotions[1];
-	constructor(public utils: UtilsService, private dialog: MatDialog) {}
+	records: Record[] = [];
+	constructor(public utils: UtilsService, private dialog: MatDialog, private auth: AuthService) {}
 
-	ngOnInit(): void {}
+	ngOnInit(): void {
+		this.auth.records$.subscribe((records: Record[]) => (this.records = records));
+	}
 
 	openDialog(emotion: Emotion): void {
 		console.info(emotion);

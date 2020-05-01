@@ -28,20 +28,26 @@ export class AuthService {
 	user$: Observable<User>;
 	ui: firebaseui.auth.AuthUI = new firebaseui.auth.AuthUI(auth());
 	asyncOperation: Subject<boolean> = new Subject<boolean>();
-	records: Record[] = [];
+	records: Record[] = null; // local copy
 	records$: Subject<Record[]> = new Subject<Record[]>();
 	constructor(
 		private afAuth: AngularFireAuth,
 		private afs: AngularFirestore,
 		private router: Router
 	) {
+		console.info('auth');
+		// ? every time data is shared between component also the service has to listen
+		this.records$.subscribe((records: Record[]) => (this.records = records));
 		// Get the auth state, then fetch the Firestore user document or return null
+		this.getUser();
+	}
+
+	async getUser() {
 		this.user$ = this.afAuth.authState.pipe(
 			switchMap(user => {
 				this.asyncOperation.next(false);
 				// Logged in
 				if (user) {
-					this.readRecords(user as User);
 					return of(user as User);
 				} else {
 					// Logged out
@@ -54,9 +60,9 @@ export class AuthService {
 	/**
 	 * Need to save a local copy of the records
 	 */
-	private async readRecords(user: User) {
-		user = mocked; // ! remove this line when real data
+	public async readRecords(user: User) {
 		console.info('readRecords');
+		user = mocked; // ! remove this line when real data
 		this.asyncOperation.next(true);
 		let res = await this.afs
 			.collection('users')
@@ -74,8 +80,7 @@ export class AuthService {
 				return [];
 			});
 		this.asyncOperation.next(false);
-		this.records = res; // local copy
-		this.records$.next(this.records); // send to subscribers
+		this.records$.next(res); // send to subscribers
 	}
 
 	async newRecord(user: User, record: Record): Promise<boolean> {
@@ -130,12 +135,7 @@ export class AuthService {
 		return res;
 	}
 
-	// async googleSignin() {
-	// 	const provider = new auth.GoogleAuthProvider();
-	// 	const credential = await this.afAuth.signInWithPopup(provider);
-	// 	return this.updateUserData(credential.user);
-	// }
-
+	// TODO use this function on login
 	private updateUserData(user: User) {
 		// Sets user data to firestore on login
 		// ! modify this line to point on the correct location

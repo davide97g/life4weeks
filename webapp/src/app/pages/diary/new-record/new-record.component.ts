@@ -10,12 +10,10 @@ import {
 import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 import { Emotion } from '@models/emotion/';
 import { Record } from '@models/record/';
-import { EmotionService } from '@services/emotion/emotion.service';
 import { MatHorizontalStepper } from '@angular/material/stepper';
-import { AuthService } from '@services/auth/auth.service';
+import { AuthService } from '@services/auth.service';
 import { mocked } from '@models/user';
-import { UtilsService } from '@services/utils/utils.service';
-import { DiaryService } from '@services/diary/diary.service';
+import { UtilsService } from '@services/utils.service';
 
 export function forbiddenNameValidator(nameRe: RegExp): ValidatorFn {
 	return (control: AbstractControl): { [key: string]: any } | null => {
@@ -53,19 +51,13 @@ export class NewRecordComponent implements OnInit {
 		return classes;
 	};
 	@ViewChild('stepper') stepper: MatHorizontalStepper;
-	constructor(
-		private fb: FormBuilder,
-		private emotionService: EmotionService,
-		public auth: AuthService,
-		private utils: UtilsService,
-		private diaryService: DiaryService
-	) {
+	constructor(private fb: FormBuilder, public auth: AuthService, private utils: UtilsService) {
 		this.maxDate = new Date();
-		this.emotions = this.emotionService.getEmotions();
-		this.diaryService.records.subscribe((records: Record[]) => (this.records = records));
+		this.emotions = this.utils.getEmotions();
 	}
 
 	ngOnInit(): void {
+		this.auth.records$.subscribe((records: Record[]) => (this.records = records));
 		this.recordFormGroup = this.fb.group({
 			date: [null, [Validators.required]],
 			emotion: [null, [Validators.required]],
