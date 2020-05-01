@@ -12,6 +12,7 @@ export class PersonalAreaComponent implements OnInit {
 	constructor(private auth: AuthService, private diary: DiaryService) {
 		this.auth.records$.subscribe((records: Record[]) => {
 			this.records = records;
+			// TODO use the appropriate service : PersonalAreaService
 			this.diary.records.next(this.records); // send signal to listeners
 		});
 	}
