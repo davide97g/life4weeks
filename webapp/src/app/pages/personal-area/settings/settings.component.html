@@ -2,13 +2,13 @@
 	<mat-card-title>
 		<h2>Settings</h2>
 	</mat-card-title>
-	<mat-card-content>
+	<mat-card-content *ngIf="settings !== null">
 		<mat-card class="card-settings" [class.mat-elevation-z2]="true">
 			<mat-card-subtitle>Edit the <strong>color of emotions</strong></mat-card-subtitle>
 			<mat-card-content>
 				<mat-chip-list #chipList aria-label="Emotion-color selection">
 					<mat-chip
-						*ngFor="let emotion of emotions"
+						*ngFor="let emotion of settings.customEmotions"
 						[background]="emotion.color.rgba.value"
 					>
 						{{ emotion.emoji }} {{ emotion.text }}
@@ -23,18 +23,25 @@
 				</mat-chip-list>
 			</mat-card-content>
 		</mat-card>
-		<mat-card class="card-settings" [background]="theme.color.rgba.value">
+		<mat-card class="card-settings" [background]="settings.theme.primary.rgba.value">
 			<mat-card-subtitle> Edit the <strong>theme</strong> </mat-card-subtitle>
 			<mat-card-content>
-				<mat-radio-group [(ngModel)]="theme" color="primary">
+				<mat-radio-group
+					[(ngModel)]="settings.theme"
+					(ngModelChange)="check()"
+					color="primary"
+				>
 					<mat-radio-button
-						*ngFor="let theme of emotions"
+						*ngFor="let theme of themes"
 						class="radio-button"
 						[value]="theme"
-						>{{ theme.text | titlecase }}</mat-radio-button
+						>{{ theme.name | titlecase }}</mat-radio-button
 					>
 				</mat-radio-group>
 			</mat-card-content>
 		</mat-card>
 	</mat-card-content>
+	<mat-card-actions>
+		<button mat-stroked-button (click)="saveSettings()">Save settings</button>
+	</mat-card-actions>
 </mat-card>

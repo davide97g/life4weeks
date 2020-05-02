@@ -17,18 +17,18 @@ export interface Theme {
 /**
  * @name themes
  * @constant
- * @description map of available themes
+ * @description list of available themes
  * @author Davide Ghiotto
  */
-export const themes: { yellowBlue: Theme; greenRed: Theme } = {
-	yellowBlue: {
+export const themes: Theme[] = [
+	{
 		name: 'yellow-blue',
 		primary: colors.yellow,
 		accent: colors.blue,
 	},
-	greenRed: {
+	{
 		name: 'green-red',
 		primary: colors.green,
 		accent: colors.red,
 	},
-};
+];

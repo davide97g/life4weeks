@@ -14,6 +14,7 @@ import { switchMap } from 'rxjs/operators';
 import * as firebaseui from 'firebaseui';
 import { Record } from '@models/record';
 import { mocked } from '@models/user';
+import { Settings } from '@models/settings';
 const config = {
 	signInSuccessUrl: 'home',
 	signInOptions: [auth.GoogleAuthProvider.PROVIDER_ID, auth.EmailAuthProvider.PROVIDER_ID],
@@ -30,6 +31,7 @@ export class AuthService {
 	asyncOperation: Subject<boolean> = new Subject<boolean>();
 	records: Record[] = null; // local copy
 	records$: Subject<Record[]> = new Subject<Record[]>();
+
 	constructor(
 		private afAuth: AngularFireAuth,
 		private afs: AngularFirestore,
@@ -131,6 +133,42 @@ export class AuthService {
 					console.error(err);
 					return false;
 				});
+		this.asyncOperation.next(false);
+		return res;
+	}
+
+	/**
+	 * @name getUserSettings
+	 * @description download the user's settings and returns a promise
+	 * @returns {Promise<Settings>}
+	 */
+	async getUserSettings(): Promise<Settings> {
+		this.asyncOperation.next(true);
+		let user: User = mocked; // todo_ remove this and use the user from auth
+		let userRef = this.afs.collection('users').doc(user.uid).ref;
+		let res: Settings = await userRef
+			.get()
+			.then(snapshot => (snapshot && snapshot.data() ? (snapshot.data() as Settings) : null))
+			.catch(err => {
+				console.error(err);
+				return null;
+			});
+		this.asyncOperation.next(false);
+		return res;
+	}
+
+	async saveUserSettings(settings: Settings): Promise<boolean> {
+		this.asyncOperation.next(true);
+		let res: boolean = false;
+		let user: User = mocked;
+		let userRef = this.afs.collection('users').doc(user.uid).ref;
+		res = await userRef
+			.set(settings, { merge: true })
+			.then(() => true)
+			.catch(err => {
+				console.error(err);
+				return false;
+			});
 		this.asyncOperation.next(false);
 		return res;
 	}

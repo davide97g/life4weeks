@@ -24,6 +24,6 @@ export interface Settings {
  */
 export const mocked: Settings = {
 	dateFormat: 'dd/MM/yyyy',
-	theme: themes.yellowBlue,
+	theme: themes[0],
 	customEmotions: EmotionList,
 };
