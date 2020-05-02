@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Emotion, EmotionList, Color } from '@models/emotion/';
+import { Emotion, EmotionList } from '@models/emotion/';
 
 @Component({
 	selector: 'app-dialog-emotion-color',

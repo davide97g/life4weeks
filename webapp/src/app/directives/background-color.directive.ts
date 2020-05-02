@@ -1,4 +1,4 @@
-import { Color } from '@models/emotion';
+import { Color } from '@models/color';
 import {
 	Directive,
 	ElementRef,
