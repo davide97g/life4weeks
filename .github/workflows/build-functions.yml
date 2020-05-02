@@ -23,4 +23,4 @@ jobs:
             - uses: actions/checkout@master
             - uses: actions/setup-node@master
             - run: cd functions && npm install
-            - run: cd functions && npm run build:prod
+            - run: cd functions && npm run build
