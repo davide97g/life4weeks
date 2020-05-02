@@ -11,18 +11,18 @@ import { Theme, themes } from '../theme';
  */
 export interface Settings {
 	dateFormat: string; // customize how date is presented dd/mm/yyyy - mm/dd/yyyy - ...
-	theme: Theme; // site theme --> change the entire site theme
 	customEmotions: Emotion[]; // list of custom emotion colors --> equal to the original but with different colors
+	theme: Theme; // site theme --> change the entire site theme
 	/**	other settings here	*/
 }
 
 /**
- * @name mocked
+ * @name defaultSettings
  * @constant
- * @description mocked settings for dev only
+ * @description default settings
  * @author Davide Ghiotto
  */
-export const mocked: Settings = {
+export const defaultSettings: Settings = {
 	dateFormat: 'dd/MM/yyyy',
 	theme: themes[0],
 	customEmotions: EmotionList,

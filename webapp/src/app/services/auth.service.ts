@@ -13,8 +13,10 @@ import { Observable, of, Subject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import * as firebaseui from 'firebaseui';
 import { Record } from '@models/record';
-import { mocked } from '@models/user';
+import { mocked as test_user } from '@models/user';
 import { Settings } from '@models/settings';
+
+// configuration for the ui
 const config = {
 	signInSuccessUrl: 'home',
 	signInOptions: [auth.GoogleAuthProvider.PROVIDER_ID, auth.EmailAuthProvider.PROVIDER_ID],
@@ -26,18 +28,17 @@ const config = {
 	providedIn: 'root',
 })
 export class AuthService {
-	user$: Observable<User>;
-	ui: firebaseui.auth.AuthUI = new firebaseui.auth.AuthUI(auth());
-	asyncOperation: Subject<boolean> = new Subject<boolean>();
-	records: Record[] = null; // local copy
-	records$: Subject<Record[]> = new Subject<Record[]>();
+	user$: Observable<User>; // user observable
+	ui: firebaseui.auth.AuthUI = new firebaseui.auth.AuthUI(auth()); // login firebase ui
+	asyncOperation: Subject<boolean> = new Subject<boolean>(); // signal to the progress bar
+	records: Record[] = null; // records local copy
+	records$: Subject<Record[]> = new Subject<Record[]>(); // records observable
 
 	constructor(
 		private afAuth: AngularFireAuth,
 		private afs: AngularFirestore,
 		private router: Router
 	) {
-		console.info('auth');
 		// ? every time data is shared between component also the service has to listen
 		this.records$.subscribe((records: Record[]) => (this.records = records));
 		// Get the auth state, then fetch the Firestore user document or return null
@@ -59,12 +60,9 @@ export class AuthService {
 		);
 	}
 
-	/**
-	 * Need to save a local copy of the records
-	 */
 	public async readRecords(user: User) {
-		console.info('readRecords');
-		user = mocked; // ! remove this line when real data
+		console.info('📘 - read');
+		user = test_user; // ! remove this line when real data
 		this.asyncOperation.next(true);
 		let res = await this.afs
 			.collection('users')
@@ -87,6 +85,7 @@ export class AuthService {
 
 	async newRecord(user: User, record: Record): Promise<boolean> {
 		this.asyncOperation.next(true);
+		console.info('📗 - write');
 		let res: boolean = await this.afs
 			.collection('users')
 			.doc(user.uid)
@@ -103,6 +102,7 @@ export class AuthService {
 
 	async deleteRecord(user: User, record: Record): Promise<boolean> {
 		this.asyncOperation.next(true);
+		console.info('📘 - read');
 		let res: boolean = false;
 		// records reference
 		let recordsRef = this.afs.collection('users').doc(user.uid).collection('records').ref;
@@ -123,7 +123,8 @@ export class AuthService {
 				console.error(err);
 				return null;
 			});
-		if (id)
+		if (id) {
+			console.info('📕 - delete');
 			// delete that doc
 			res = await recordsRef
 				.doc(id)
@@ -133,6 +134,7 @@ export class AuthService {
 					console.error(err);
 					return false;
 				});
+		}
 		this.asyncOperation.next(false);
 		return res;
 	}
@@ -144,7 +146,8 @@ export class AuthService {
 	 */
 	async getUserSettings(): Promise<Settings> {
 		this.asyncOperation.next(true);
-		let user: User = mocked; // todo_ remove this and use the user from auth
+		console.info('📘 - read');
+		let user: User = test_user; // todo_ remove this and use the user from auth
 		let userRef = this.afs.collection('users').doc(user.uid).ref;
 		let res: Settings = await userRef
 			.get()
@@ -159,8 +162,9 @@ export class AuthService {
 
 	async saveUserSettings(settings: Settings): Promise<boolean> {
 		this.asyncOperation.next(true);
+		console.info('📗 - write');
 		let res: boolean = false;
-		let user: User = mocked;
+		let user: User = test_user;
 		let userRef = this.afs.collection('users').doc(user.uid).ref;
 		res = await userRef
 			.set(settings, { merge: true })

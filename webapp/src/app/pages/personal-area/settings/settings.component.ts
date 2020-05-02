@@ -4,8 +4,7 @@ import { UtilsService } from '@services/utils.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogEmotionColorComponent } from '@components/dialog-emotion-color/dialog-emotion-color.component';
 import { AuthService } from '@services/auth.service';
-// import { Record } from '@models/record';
-import { Settings } from '@models/settings';
+import { Settings, defaultSettings } from '@models/settings';
 import { Theme, themes } from '@models/theme';
 @Component({
 	selector: 'app-settings',
@@ -13,23 +12,22 @@ import { Theme, themes } from '@models/theme';
 	styleUrls: ['./settings.component.sass', '../../../../../../models/src/emotion/style.sass'],
 })
 export class SettingsComponent implements OnInit {
-	// records: Record[] = [];
-	settings: Settings = null;
+	defaultSettings: Settings = defaultSettings;
+	settings: Settings = this.defaultSettings;
 	themes: Theme[] = themes;
-	theme: Theme;
 	constructor(public utils: UtilsService, private dialog: MatDialog, private auth: AuthService) {}
 
 	ngOnInit(): void {
-		// this.auth.records$.subscribe((records: Record[]) => (this.records = records));
-		this.auth.getUserSettings().then((settings: Settings) => {
-			this.settings = settings;
-			this.check();
-		});
-	}
-
-	check() {
-		this.theme = this.settings.theme;
-		console.info('check', this.theme, this.settings.theme);
+		this.auth
+			.getUserSettings()
+			.then((settings: Settings) => {
+				if (settings) {
+					// todo: fix this
+					console.info(this.settings.theme, settings.theme);
+					if (settings.theme === this.settings.theme) console.info('equal');
+				} else settings = defaultSettings;
+			})
+			.catch(err => console.error(err));
 	}
 
 	saveSettings() {
@@ -39,6 +37,24 @@ export class SettingsComponent implements OnInit {
 				res
 					? this.utils.openSnackBar('Settings saved', '👍')
 					: this.utils.openSnackBar('Error while saving settings', 'Please try again 🙏')
+			)
+			.catch(err => {
+				console.error(err);
+				this.utils.openSnackBar('Something went wrong', '💀💀💀');
+			});
+	}
+
+	resetSettings() {
+		this.settings = this.defaultSettings;
+		this.auth
+			.saveUserSettings(this.defaultSettings)
+			.then((res: boolean) =>
+				res
+					? this.utils.openSnackBar('Settings resetted', '👍')
+					: this.utils.openSnackBar(
+							'Error while resetting settings',
+							'Please try again 🙏'
+					  )
 			)
 			.catch(err => {
 				console.error(err);
