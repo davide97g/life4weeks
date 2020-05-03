@@ -1,7 +1,7 @@
 import * as firebase from 'firebase/app';
 import * as functions from 'firebase-functions';
 import * as nodemailer from 'nodemailer';
-import { User } from '../models/src/user';
+import { User } from '@models/user';
 
 const myEmail = 'life4weeks@gmail.com';
 const transporter = nodemailer.createTransport({
