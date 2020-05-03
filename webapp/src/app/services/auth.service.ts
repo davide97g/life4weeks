@@ -29,6 +29,8 @@ const config = {
 })
 export class AuthService {
 	user$: Observable<User>; // user observable
+	user: User;
+	settings: Settings;
 	ui: firebaseui.auth.AuthUI = new firebaseui.auth.AuthUI(auth()); // login firebase ui
 	asyncOperation: Subject<boolean> = new Subject<boolean>(); // signal to the progress bar
 	records: Record[] = null; // records local copy
@@ -51,7 +53,8 @@ export class AuthService {
 				this.asyncOperation.next(false);
 				// Logged in
 				if (user) {
-					return of(user as User);
+					this.user = user as User;
+					return of(this.user);
 				} else {
 					// Logged out
 					return of(null);
@@ -60,13 +63,16 @@ export class AuthService {
 		);
 	}
 
-	public async readRecords(user: User) {
+	getUserInfo(): User {
+		return this.user;
+	}
+
+	public async readRecords() {
 		console.info('📘 - read');
-		user = test_user; // ! remove this line when real data
 		this.asyncOperation.next(true);
 		let res = await this.afs
 			.collection('users')
-			.doc(user.uid)
+			.doc(this.user.uid)
 			.collection('records')
 			.get()
 			.toPromise()
@@ -83,12 +89,12 @@ export class AuthService {
 		this.records$.next(res); // send to subscribers
 	}
 
-	async newRecord(user: User, record: Record): Promise<boolean> {
+	async newRecord(record: Record): Promise<boolean> {
 		this.asyncOperation.next(true);
 		console.info('📗 - write');
 		let res: boolean = await this.afs
 			.collection('users')
-			.doc(user.uid)
+			.doc(this.user.uid)
 			.collection('records')
 			.add(record)
 			.then(() => true)
@@ -100,12 +106,12 @@ export class AuthService {
 		return res;
 	}
 
-	async deleteRecord(user: User, record: Record): Promise<boolean> {
+	async deleteRecord(record: Record): Promise<boolean> {
 		this.asyncOperation.next(true);
 		console.info('📘 - read');
 		let res: boolean = false;
 		// records reference
-		let recordsRef = this.afs.collection('users').doc(user.uid).collection('records').ref;
+		let recordsRef = this.afs.collection('users').doc(this.user.uid).collection('records').ref;
 		// prepare query
 		let query = recordsRef.where('date', '==', record.date);
 		// find doc id with date == record.date
@@ -139,16 +145,19 @@ export class AuthService {
 		return res;
 	}
 
+	getUserSettings(): Settings {
+		return this.settings;
+	}
+
 	/**
 	 * @name getUserSettings
 	 * @description download the user's settings and returns a promise
 	 * @returns {Promise<Settings>}
 	 */
-	async getUserSettings(): Promise<Settings> {
+	async readUserSettings(): Promise<Settings> {
 		this.asyncOperation.next(true);
 		console.info('📘 - read');
-		let user: User = test_user; // todo_ remove this and use the user from auth
-		let userRef = this.afs.collection('users').doc(user.uid).ref;
+		let userRef = this.afs.collection('users').doc(this.user.uid).ref;
 		let res: Settings = await userRef
 			.get()
 			.then(snapshot => (snapshot && snapshot.data() ? (snapshot.data() as Settings) : null))
@@ -156,6 +165,7 @@ export class AuthService {
 				console.error(err);
 				return null;
 			});
+		this.settings = res;
 		this.asyncOperation.next(false);
 		return res;
 	}
@@ -164,8 +174,7 @@ export class AuthService {
 		this.asyncOperation.next(true);
 		console.info('📗 - write');
 		let res: boolean = false;
-		let user: User = test_user;
-		let userRef = this.afs.collection('users').doc(user.uid).ref;
+		let userRef = this.afs.collection('users').doc(this.user.uid).ref;
 		res = await userRef
 			.set(settings, { merge: true })
 			.then(() => true)
@@ -173,25 +182,9 @@ export class AuthService {
 				console.error(err);
 				return false;
 			});
+		if (res) this.settings = settings;
 		this.asyncOperation.next(false);
 		return res;
-	}
-
-	// TODO use this function on login
-	private updateUserData(user: User) {
-		// Sets user data to firestore on login
-		// ! modify this line to point on the correct location
-		const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
-
-		const data = {
-			uid: user.uid,
-			email: user.email,
-			displayName: user.displayName,
-			photoURL: user.photoURL,
-			metadata: user.metadata,
-		};
-
-		return userRef.set(data, { merge: true });
 	}
 
 	async signOut() {

@@ -19,7 +19,7 @@ export class SettingsComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.auth
-			.getUserSettings()
+			.readUserSettings()
 			.then((settings: Settings) => {
 				if (settings) {
 					// todo: fix this

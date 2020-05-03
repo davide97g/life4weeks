@@ -50,11 +50,9 @@ export const welcomeMail = functions.auth.user().onCreate((u: functions.auth.Use
 			`
 			<body>
 			<h3>
-				Welcome
-				<pre style="display: inline;">` +
+				Welcome` +
 			user.displayName +
-			`</pre>
-				😄
+			`😄
 			</h3>
 			<p style="display: block;">
 				This mail is a confirmation of your registration to "Life in weeks". We are very happy that

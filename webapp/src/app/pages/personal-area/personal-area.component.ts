@@ -7,7 +7,7 @@ import { AuthService } from '@services/auth.service';
 })
 export class PersonalAreaComponent implements OnInit {
 	constructor(private auth: AuthService) {
-		this.auth.readRecords(null);
+		this.auth.user$.subscribe(() => this.auth.readRecords());
 	}
 
 	ngOnInit(): void {}

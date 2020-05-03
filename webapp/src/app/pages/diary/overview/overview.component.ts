@@ -17,7 +17,7 @@ function checkDate(utc: string, incomplete: Date): boolean {
 })
 export class OverviewComponent implements OnInit {
 	order: string = 'desc';
-	startingDate: Date = new Date('04/15/2020');
+	startingDate: Date;
 	dateClass: Function = (d: Date): MatCalendarCellCssClasses => {
 		if (!this.records) return;
 		let record = this.records.find((record: Record) => {
@@ -35,6 +35,7 @@ export class OverviewComponent implements OnInit {
 		this.auth.records$.subscribe((records: Record[]) => {
 			this.records = records;
 			this.orderNotes();
+			this.startingDate = new Date(this.auth.getUserInfo().metadata.creationTime);
 			if (this.calendar) this.calendar.updateTodaysDate(); // update calendar view
 		});
 	}
@@ -53,7 +54,7 @@ export class OverviewComponent implements OnInit {
 		if (i !== -1)
 			// if found
 			this.auth
-				.deleteRecord(mocked, record)
+				.deleteRecord(record)
 				.then((res: boolean) => {
 					if (res) {
 						this.utils.openSnackBar('Record on date ' + record.date, 'Deleted');

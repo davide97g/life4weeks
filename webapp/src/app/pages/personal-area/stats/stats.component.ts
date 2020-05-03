@@ -49,9 +49,9 @@ export class StatsComponent implements OnInit, AfterViewInit {
 
 	initUserData() {
 		this.startingDate = new Date(this.user.metadata.creationTime);
-		this.totalDays = Math.floor(
-			(new Date().getTime() - this.startingDate.getTime()) / (1000 * 3600 * 24)
-		);
+		this.totalDays =
+			Math.floor((new Date().getTime() - this.startingDate.getTime()) / (1000 * 3600 * 24)) +
+			1;
 		this.recordsSinceStartingDate = this.records.filter((record: Record) => {
 			return new Date(record.date) >= this.startingDate;
 		});
