@@ -1,1 +1,3 @@
-C:/Users/ghiot/Desktop/projects/life4weeks/models/README.md
+# Models
+
+Folder for the data modeling
