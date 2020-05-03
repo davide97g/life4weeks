@@ -1,4 +1,5 @@
 import * as firebase from 'firebase/app';
+import 'firebase/firestore';
 import * as functions from 'firebase-functions';
 import * as nodemailer from 'nodemailer';
 import { User } from '@models/user';
@@ -15,10 +16,10 @@ const transporter = nodemailer.createTransport({
 export const sendMail = functions.https.onCall(
 	(data: { name: string; email: string }, context?: functions.https.CallableContext) => {
 		const mailOptions = {
-			from: 'Life in weeks 😀' + myEmail,
+			from: 'Life in weeks' + myEmail,
 			to: data.email,
-			subject: 'Hey there ' + data.name,
-			text: 'Welcome ' + data.name + '! 🚀',
+			subject: 'Email test ' + data.name,
+			text: 'Hi ' + data.name + ", this is an email test and it's working I guess 🚀",
 		};
 
 		transporter.sendMail(mailOptions, (err: any, info: any) => {
@@ -42,11 +43,26 @@ export const welcomeMail = functions.auth.user().onCreate((u: functions.auth.Use
 		metadata: u.metadata,
 	};
 	const mailOptions = {
-		from: 'Zeus Code 😀' + myEmail,
+		from: 'Life in weeks' + myEmail,
 		to: user.email,
-		subject: 'Registration to Zeuscode.it',
-		text: 'Welcome ' + user.displayName + '! 🚀',
-		html: `<h3>Welcome ` + user.displayName + ` 🚀</h3>`,
+		subject: 'Registration',
+		html:
+			`
+			<body>
+			<h3>
+				Welcome
+				<pre style="display: inline;">` +
+			user.displayName +
+			`</pre>
+				😄
+			</h3>
+			<p style="display: block;">
+				This mail is a confirmation of your registration to "Life in weeks". We are very happy that
+				you joined the project!
+			</p>
+			<a style="display: block;" href="https://life-4-weeks.firebaseapp.com">Go to website<a />
+		</body>
+		`,
 	};
 
 	transporter.sendMail(mailOptions, (err: any, info: any) => {
