@@ -10,12 +10,10 @@ import {
 import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 import { Emotion } from '@models/emotion/';
 import { Record } from '@models/record/';
-import { EmotionService } from '@services/emotion/emotion.service';
 import { MatHorizontalStepper } from '@angular/material/stepper';
-import { AuthService } from '@services/auth/auth.service';
-import { mocked } from '@models/user';
-import { UtilsService } from '@services/utils/utils.service';
-import { DiaryService } from '@services/diary/diary.service';
+import { AuthService } from '@services/auth.service';
+import { UtilsService } from '@services/utils.service';
+import { Settings } from '@models/settings';
 
 export function forbiddenNameValidator(nameRe: RegExp): ValidatorFn {
 	return (control: AbstractControl): { [key: string]: any } | null => {
@@ -40,7 +38,7 @@ export class NewRecordComponent implements OnInit {
 	emotions: Emotion[];
 	minDate: Date;
 	maxDate: Date;
-	startingDate: Date = new Date('04/15/2020');
+	startingDate: Date;
 	recordFormGroup: FormGroup;
 	percentage: number;
 	dateClass: Function = (d: Date): MatCalendarCellCssClasses => {
@@ -53,19 +51,19 @@ export class NewRecordComponent implements OnInit {
 		return classes;
 	};
 	@ViewChild('stepper') stepper: MatHorizontalStepper;
-	constructor(
-		private fb: FormBuilder,
-		private emotionService: EmotionService,
-		public auth: AuthService,
-		private utils: UtilsService,
-		private diaryService: DiaryService
-	) {
+	constructor(private fb: FormBuilder, public auth: AuthService, private utils: UtilsService) {
 		this.maxDate = new Date();
-		this.emotions = this.emotionService.getEmotions();
-		this.diaryService.records.subscribe((records: Record[]) => (this.records = records));
+		this.emotions = this.utils.getEmotions();
 	}
 
 	ngOnInit(): void {
+		this.auth.records$.subscribe((records: Record[]) => {
+			this.records = records;
+			this.startingDate = new Date(this.auth.getUserInfo().metadata.creationTime);
+			this.auth
+				.readUserSettings()
+				.then((settings: Settings) => (this.emotions = settings.customEmotions));
+		});
 		this.recordFormGroup = this.fb.group({
 			date: [null, [Validators.required]],
 			emotion: [null, [Validators.required]],
@@ -122,7 +120,7 @@ export class NewRecordComponent implements OnInit {
 		let record: Record = this.recordFormGroup.value;
 		record.date = new Date(record.date).toUTCString();
 		this.auth
-			.newRecord(mocked, record) // TODO cambiare la variabile mocked con un valore contenuto nel AuthService senza bisogno di passarlo dal component
+			.newRecord(record) // TODO cambiare la variabile mocked con un valore contenuto nel AuthService senza bisogno di passarlo dal component
 			.then((res: boolean) => {
 				if (res) {
 					this.records.push(record); // mi salvo la copia locale

@@ -7,10 +7,10 @@
 ![GitHub](https://img.shields.io/github/license/davide97g/life4weeks)
 ![GitHub contributors](https://img.shields.io/github/contributors/davide97g/life4weeks)
 
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/davide97g/life4weeks/Build%20Webapp)
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/davide97g/life4weeks/Build%20Functions)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/davide97g/life4weeks/build-webapp)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/davide97g/life4weeks/build-functions)
 
-![Firebase Functions](https://github.com/davide97g/life4weeks/workflows/Firebase%20Deploy%20Functions/badge.svg?branch=master) ![Firebase Hosting](https://github.com/davide97g/life4weeks/workflows/Firebase%20Deploy%20Hosting/badge.svg?branch=master)
+![Firebase Functions](https://github.com/davide97g/life4weeks/workflows/deploy-functions/badge.svg?branch=master) ![Firebase Hosting](https://github.com/davide97g/life4weeks/workflows/deploy-hosting/badge.svg?branch=master)
 
 ## Website
 

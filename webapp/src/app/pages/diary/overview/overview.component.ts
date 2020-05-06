@@ -1,10 +1,9 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Record } from '@models/record/';
 import { mocked } from '@models/user';
 import { MatCalendarCellCssClasses, MatCalendar } from '@angular/material/datepicker';
-import { DiaryService } from '@services/diary/diary.service';
-import { AuthService } from '@services/auth/auth.service';
-import { UtilsService } from '@services/utils/utils.service';
+import { AuthService } from '@services/auth.service';
+import { UtilsService } from '@services/utils.service';
 
 function checkDate(utc: string, incomplete: Date): boolean {
 	let date = new Date(utc).toLocaleDateString();
@@ -18,7 +17,7 @@ function checkDate(utc: string, incomplete: Date): boolean {
 })
 export class OverviewComponent implements OnInit {
 	order: string = 'desc';
-	startingDate: Date = new Date('04/15/2020');
+	startingDate: Date;
 	dateClass: Function = (d: Date): MatCalendarCellCssClasses => {
 		if (!this.records) return;
 		let record = this.records.find((record: Record) => {
@@ -31,15 +30,12 @@ export class OverviewComponent implements OnInit {
 	};
 	@ViewChild('calendar') calendar: MatCalendar<Date>;
 	records: Record[];
-	constructor(
-		private diaryService: DiaryService,
-		private auth: AuthService,
-		private utils: UtilsService
-	) {}
+	constructor(private auth: AuthService, private utils: UtilsService) {}
 	ngOnInit(): void {
-		this.diaryService.records.subscribe((records: Record[]) => {
+		this.auth.records$.subscribe((records: Record[]) => {
 			this.records = records;
 			this.orderNotes();
+			this.startingDate = new Date(this.auth.getUserInfo().metadata.creationTime);
 			if (this.calendar) this.calendar.updateTodaysDate(); // update calendar view
 		});
 	}
@@ -58,13 +54,12 @@ export class OverviewComponent implements OnInit {
 		if (i !== -1)
 			// if found
 			this.auth
-				.deleteRecord(mocked, record)
+				.deleteRecord(record)
 				.then((res: boolean) => {
 					if (res) {
 						this.utils.openSnackBar('Record on date ' + record.date, 'Deleted');
 						this.records.splice(i, 1); // delete from the local copy
-						this.diaryService.records.next(this.records); // send update
-						this.calendar.updateTodaysDate(); // update calendar view
+						this.auth.records$.next(this.records); // send update
 					} else
 						this.utils.openSnackBar(
 							'Error while inserting new Record',

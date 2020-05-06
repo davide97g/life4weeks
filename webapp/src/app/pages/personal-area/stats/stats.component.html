@@ -14,16 +14,18 @@
 			</button>
 		</h2>
 	</mat-card-title>
-	<mat-card-content>
+	<mat-card-subtitle>
+		Starting date <strong>{{ startingDate | date: 'dd/MM/yyyy' }}</strong>
+	</mat-card-subtitle>
+	<mat-card-content>		
 		<mat-card class="card-stats">
-			Starting date <strong>{{ startingDate | date: 'dd/MM/yyyy' }}</strong>
-		</mat-card>
-		<mat-card class="card-stats">
-			Total days <strong>{{ totalDays }}</strong>
-		</mat-card>
-		<mat-card class="card-stats">
-			Days recorded <strong>{{ percentage }} %</strong>
-			<button mat-icon-button color="primary" *ngIf="records.length !== totalDays">
+			Days recorded <strong>{{ recordsSinceStartingDate.length }}/{{ totalDays }}</strong> =
+			<strong>{{ percentage }} %</strong>
+			<button
+				mat-icon-button
+				color="primary"
+				*ngIf="recordsSinceStartingDate.length < totalDays"
+			>
 				<mat-icon
 					color="primary"
 					matTooltip="Insert new records"
@@ -35,7 +37,7 @@
 			</button>
 			<button
 				mat-icon-button
-				*ngIf="records.length === totalDays"
+				*ngIf="recordsSinceStartingDate.length >= totalDays"
 				matTooltip="Great! You registered every day"
 				matTooltipPosition="right"
 				matTooltipShowDelay="1000"
@@ -49,7 +51,7 @@
 			<mat-card-subtitle>
 				See your data with these <strong>cool graphs!</strong>
 			</mat-card-subtitle>
-			<mat-card-content>
+			<mat-card-actions>
 				<!-- possibile error with undefined variable -->
 				<mat-radio-group
 					[(ngModel)]="type"
@@ -63,6 +65,8 @@
 						>{{ t | titlecase }}</mat-radio-button
 					>
 				</mat-radio-group>
+			</mat-card-actions>
+			<mat-card-content id="chart">
 				<canvas #polarArea></canvas>
 			</mat-card-content>
 		</mat-card>

@@ -56,7 +56,7 @@
 		<button
 			mat-raised-button
 			color="primary"
-			[disabled]="!this[this.filter].value"
+			[disabled]="!this[this.filter].value || this.records.length===0"
 			(click)="search()"
 		>
 			Search

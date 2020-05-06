@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { DiaryService } from '@services/diary/diary.service';
 import { Record, records } from '@models/record/';
 import { Emotion } from '@models/emotion/';
-import { EmotionService } from '@services/emotion/emotion.service';
+import { UtilsService } from '@services/utils.service';
+import { AuthService } from '@services/auth.service';
 
 @Component({
 	selector: 'app-search',
@@ -17,20 +17,15 @@ export class SearchComponent implements OnInit {
 	keywords: string[] = [];
 	recordFormGroup: FormGroup;
 	records: Record[] = [];
-	constructor(
-		private diaryService: DiaryService,
-		private emotionService: EmotionService,
-		private fb: FormBuilder
-	) {}
+	constructor(private utils: UtilsService, private auth: AuthService, private fb: FormBuilder) {}
 	ngOnInit(): void {
-		this.records = records;
-		this.emotions = this.emotionService.getEmotions();
+		this.emotions = this.utils.getEmotions();
 		this.recordFormGroup = this.fb.group({
 			date: [null, [Validators.required]],
 			emotion: [null, [Validators.required]],
 			notes: null,
 		});
-		this.diaryService.records.subscribe((records: Record[]) => (this.records = records));
+		this.auth.records$.subscribe((records: Record[]) => (this.records = records));
 	}
 	get date() {
 		return this.recordFormGroup.get('date');

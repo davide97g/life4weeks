@@ -41,8 +41,7 @@ import { MenuComponent } from '@components/menu/menu.component';
 
 
 /** services */
-import { CoreService } from '@services/core/core.service';
-import { UtilsService } from '@services/utils/utils.service';
+import { UtilsService } from '@services/utils.service';
 
 /** @angular/fire */
 import { AngularFireModule } from '@angular/fire';
@@ -129,7 +128,6 @@ import { MatSortModule } from '@angular/material/sort';
 		MatSortModule,
 	],
 	providers: [
-		CoreService,
 		UtilsService,
 		MatDatepickerModule,
 		MatInputModule,
