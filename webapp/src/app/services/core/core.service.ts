@@ -19,7 +19,11 @@ export class CoreService {
 		return firebase.auth();
 	}
 
-	firestore() {
+	database(){
+		return firebase.database();
+	}
+
+	firestore(){
 		return firebase.firestore();
 	}
 }
