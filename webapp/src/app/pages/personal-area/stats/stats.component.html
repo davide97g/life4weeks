@@ -14,10 +14,15 @@
 			</button>
 		</h2>
 	</mat-card-title>
-	<mat-card-subtitle>
+	<!-- <mat-card-subtitle>
 		Starting date <strong>{{ startingDate | date: 'dd/MM/yyyy' }}</strong>
-	</mat-card-subtitle>
-	<mat-card-content>		
+	</mat-card-subtitle> -->
+	<mat-card-content *ngIf="records.length == 0">
+		<mat-card-subtitle>
+			No data recorded yet. Add some records to see the statistics
+		</mat-card-subtitle>
+	</mat-card-content>
+	<mat-card-content *ngIf="records.length > 0">
 		<mat-card class="card-stats">
 			Days recorded <strong>{{ recordsSinceStartingDate.length }}/{{ totalDays }}</strong> =
 			<strong>{{ percentage }} %</strong>
@@ -66,9 +71,9 @@
 					>
 				</mat-radio-group>
 			</mat-card-actions>
-			<mat-card-content id="chart">
-				<canvas #polarArea></canvas>
-			</mat-card-content>
 		</mat-card>
+	</mat-card-content>
+	<mat-card-content id="chart">
+		<div #graph></div>
 	</mat-card-content>
 </mat-card>
