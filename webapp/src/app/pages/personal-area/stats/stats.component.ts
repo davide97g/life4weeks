@@ -29,20 +29,20 @@ export class StatsComponent implements OnInit, AfterViewInit {
 			'Days recorded : how many days recorded of the total since you registered, in percentage',
 		],
 	};
+	// graph variables
 	@ViewChild('graph') graph: ElementRef;
 	graphTypes: string[] = ['doughnut', 'polarArea'];
 	type: string = this.graphTypes[0];
-	chart: Chart = null;
-	canvas: any = null;
-	ctx: any = null;
+	canvas: any = null; // html element
+	// chart variables
 	data: number[] = [];
 	labels: string[] = [];
 	backgroundColors: string[] = [];
+	chart: Chart = null;
 
 	constructor(public auth: AuthService, public router: Router, private dialog: MatDialog) {}
 
 	ngOnInit(): void {
-		console.info('ngOnInit');
 		this.auth.user$.subscribe((user: User) => {
 			this.user = user;
 		});
@@ -54,31 +54,33 @@ export class StatsComponent implements OnInit, AfterViewInit {
 	}
 
 	ngAfterViewInit(): void {
-		console.info('ngAfterViewInit');
 		this.canvas = document.createElement('CANVAS');
-		this.ctx = this.canvas.getContext('2d');
 		this.graph.nativeElement.appendChild(this.canvas);
 		this.updateChart();
 	}
 
+	/**
+	 * @description update background colors
+	 */
 	updateBackgroundColors(): void {
-		console.info('updateBackgroundColors');
 		this.backgroundColors = [];
 		this.emotions.forEach((emotion: Emotion) =>
 			this.backgroundColors.push(emotion.color.rgba.value)
 		);
 	}
-
+	/**
+	 * @description update labels
+	 */
 	updateLabels(): void {
-		console.info('updateLabels');
 		this.labels = [];
 		this.emotions.forEach((emotion: Emotion) =>
 			this.labels.push(emotion.text + ' ' + emotion.emoji)
 		);
 	}
-
+	/**
+	 * @description update data
+	 */
 	updateData(): void {
-		console.info('updateData');
 		this.data = [];
 		this.emotions.forEach((emotion: Emotion) => {
 			this.data.push(this.getDaysEmotion(emotion, this.recordsSinceStartingDate));
@@ -96,8 +98,7 @@ export class StatsComponent implements OnInit, AfterViewInit {
 		backgroundColors: string[],
 		title?: string
 	): Chart {
-		console.info('newChart');
-		let display: boolean = this.recordsSinceStartingDate.length == 0 ? false : true;
+		let displayLegend: boolean = this.recordsSinceStartingDate.length == 0 ? false : true;
 		return new Chart(ctx, {
 			type: type,
 			data: {
@@ -112,7 +113,7 @@ export class StatsComponent implements OnInit, AfterViewInit {
 			},
 			options: {
 				legend: {
-					display: display,
+					display: displayLegend,
 					position: 'right',
 				},
 			},
@@ -123,7 +124,6 @@ export class StatsComponent implements OnInit, AfterViewInit {
 	 * @description fill the statistics from the user's data
 	 */
 	initUserData(): void {
-		console.info('initUserData');
 		this.startingDate = new Date(this.user.metadata.creationTime);
 		this.totalDays =
 			Math.floor((new Date().getTime() - this.startingDate.getTime()) / (1000 * 3600 * 24)) +
@@ -138,15 +138,12 @@ export class StatsComponent implements OnInit, AfterViewInit {
 	 * @description updates the chart with the data from records
 	 */
 	updateChart(): void {
-		console.info('updateChartData');
-		// this.chart.data.datasets[0].data = this.getData();
-		// this.chart.update({ duration: 2000 });
 		this.updateBackgroundColors();
 		this.updateLabels();
 		this.updateData();
-
+		if (this.chart !== null) this.chart.destroy();
 		this.chart = this.newChart(
-			this.ctx,
+			this.canvas.getContext('2d'),
 			this.type,
 			this.data,
 			this.labels,
@@ -159,7 +156,6 @@ export class StatsComponent implements OnInit, AfterViewInit {
 	 * @param emotion
 	 */
 	getDaysEmotion(emotion: Emotion, records: Record[]): number {
-		console.info('getDaysEmotion');
 		let tot: number = 0;
 		records.forEach((record: Record) => {
 			if (record.emotion.text === emotion.text) tot++;
@@ -172,7 +168,6 @@ export class StatsComponent implements OnInit, AfterViewInit {
 	 * @param type graph type
 	 */
 	changeType(type: string) {
-		console.info('changeType', type);
 		this.type = type;
 		this.updateChart();
 	}
