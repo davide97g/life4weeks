@@ -5,11 +5,15 @@
 	"main": "index.js",
 	"scripts": {
 		"lint": "tslint --project tsconfig.json",
-		"build": "tsc"
+		"build": "tsc",
+		"extract": "cd src/life-expectancy && node extract"
 	},
 	"author": "Davide Ghiotto",
 	"license": "ISC",
 	"devDependencies": {
+		"csv-parser": "^2.3.2",
+		"fs": "0.0.1-security",
+		"strip-bom-stream": "^4.0.0",
 		"tslint": "^6.1.1",
 		"typescript": "^3.8.3"
 	}

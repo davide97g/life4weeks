@@ -9,5 +9,5 @@
 		"target": "es2017"
 	},
 	"compileOnSave": true,
-	"include": ["src/emotion", "src/record", "src/user"]
+	"include": ["./src/**/*.ts"]
 }

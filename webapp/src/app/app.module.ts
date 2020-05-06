@@ -26,6 +26,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatTableModule } from '@angular/material/table';
 /** pages */
 import { NotFoundComponent } from '@pages/not-found/not-found.component';
 import { HomeComponent } from '@pages/home/home.component';
@@ -68,6 +69,9 @@ import { ProfileComponent } from './pages/personal-area/profile/profile.componen
 import { DialogEmotionColorComponent } from './components/dialog-emotion-color/dialog-emotion-color.component';
 import { BackgroundColorDirective } from './directives/background-color.directive';
 import { DialogInfoComponent } from './components/dialog-info/dialog-info.component';
+import { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
 	declarations: [
@@ -90,6 +94,7 @@ import { DialogInfoComponent } from './components/dialog-info/dialog-info.compon
 		DialogEmotionColorComponent,
 		BackgroundColorDirective,
 		DialogInfoComponent,
+		ProgressBarComponent,
 	],
 	imports: [
 		BrowserModule,
@@ -119,6 +124,9 @@ import { DialogInfoComponent } from './components/dialog-info/dialog-info.compon
 		MatBadgeModule,
 		MatDividerModule,
 		MatGridListModule,
+		MatTableModule,
+		MatPaginatorModule,
+		MatSortModule,
 	],
 	providers: [
 		CoreService,

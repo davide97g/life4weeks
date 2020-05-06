@@ -4,14 +4,14 @@
 <div mat-dialog-content align="center">
 	<mat-form-field>
 		<mat-label>Choose a color</mat-label>
-		<input matInput [(ngModel)]="emotion.color" />
+		<input matInput [(ngModel)]="emotion.color.rgba.value" />
 		<button
 			mat-button
-			*ngIf="emotion.color !== original"
+			*ngIf="emotion.color.rgba.value !== original"
 			matSuffix
 			mat-icon-button
 			aria-label="Reset"
-			(click)="emotion.color = original"
+			(click)="emotion.color.rgba.value = original"
 			matTooltip="Reset to original"
 			matTooltipPosition="right"
 			matTooltipShowDelay="1000"
@@ -24,7 +24,7 @@
 			matTooltip="Preview"
 			matTooltipPosition="right"
 			matTooltipShowDelay="1000"
-			[background]="emotion.color"
+			[background]="emotion.color.rgba.value"
 		>
 			{{ emotion.emoji }} {{ emotion.text }}
 		</mat-chip>

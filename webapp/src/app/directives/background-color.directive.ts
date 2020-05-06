@@ -1,3 +1,4 @@
+import { Color } from '@models/emotion';
 import {
 	Directive,
 	ElementRef,
@@ -20,6 +21,8 @@ export class BackgroundColorDirective implements AfterViewInit, OnChanges {
 	}
 
 	@Input('background') color: string;
+	@Input('opacity') opacity: number;
+	@Input('fullColor') fullColor: Color;
 
 	// @HostListener('mouseenter') onMouseEnter() {
 	// 	this.highlight(this.color || 'red');
@@ -31,5 +34,16 @@ export class BackgroundColorDirective implements AfterViewInit, OnChanges {
 
 	private highlight(color: string) {
 		this.el.nativeElement.style.backgroundColor = color;
+		if (this.fullColor)
+			this.el.nativeElement.style.backgroundColor =
+				'rgba(' +
+				this.fullColor.rgba.R +
+				',' +
+				this.fullColor.rgba.G +
+				',' +
+				this.fullColor.rgba.B +
+				',' +
+				this.opacity +
+				')';
 	}
 }
