@@ -24,6 +24,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatBadgeModule } from '@angular/material/badge';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatGridListModule } from '@angular/material/grid-list';
 /** pages */
 import { NotFoundComponent } from '@pages/not-found/not-found.component';
 import { HomeComponent } from '@pages/home/home.component';
@@ -33,8 +35,10 @@ import { TermsOfServiceComponent } from './pages/terms-of-service/terms-of-servi
 import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.component';
 import { CalendarComponent } from './pages/calendar/calendar.component';
 import { DiaryComponent } from './pages/diary/diary.component';
-/** components */
+/** components */ /* name class, route to file component */
 import { MenuComponent } from '@components/menu/menu.component';
+
+
 /** services */
 import { CoreService } from '@services/core/core.service';
 import { UtilsService } from '@services/utils/utils.service';
@@ -113,6 +117,8 @@ import { DialogInfoComponent } from './components/dialog-info/dialog-info.compon
 		MatChipsModule,
 		MatDialogModule,
 		MatBadgeModule,
+		MatDividerModule,
+		MatGridListModule,
 	],
 	providers: [
 		CoreService,

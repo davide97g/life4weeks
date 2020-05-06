@@ -1,18 +1,106 @@
-<p>calendar works!</p>
-<app-background-info></app-background-info>
+<div class="form-display">
+	<div class="card-width">
+		<mat-card class="small-card" background="#ffd740">
+			<mat-card-title>Some background on you</mat-card-title>
+		</mat-card>
+		<mat-card class="small-card">
+			<mat-card-content>
+				<!--Date picker-->
+				<h4>Date of birth</h4>
+				<mat-form-field class="width-max">
+					<mat-label>Date of birth</mat-label>
+					<input matInput [matDatepicker]="picker" />
+					<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+					<mat-datepicker #picker></mat-datepicker>
+				</mat-form-field>
 
+				<!--Radio button  -->
+				<h4>Born as</h4>
+				<mat-radio-group aria-label="Born as" class="radio">
+					<mat-radio-button value="F">Female</mat-radio-button>
+					<mat-radio-button value="M" checked="checked">Male</mat-radio-button>
+				</mat-radio-group>
 
+				<!-- State picker -->
+				<h4>Country of birth</h4>
+				<mat-form-field class="width-max">
+					<mat-label>State</mat-label>
+					<mat-select [(value)]="selected">
+						<mat-optgroup
+							*ngFor="let group of stateGroups"
+							[label]="group.name"
+							[disabled]="group.disabled"
+						>
+							<mat-option *ngFor="let state of group.state" [value]="state.value">
+								{{ state.viewValue }}
+							</mat-option>
+						</mat-optgroup>
+					</mat-select>
+				</mat-form-field>
+			</mat-card-content>
+			<mat-card-footer
+				>Your sex and place of birth affects your average life expectancy
+				<a
+					href="https://en.wikipedia.org/wiki/List_of_countries_by_life_expectancy#List_by_the_United_Nations.2C_for_2010.E2.80.932015"
+					>[1]</a
+				></mat-card-footer
+			>
+		</mat-card>
+	</div>
 
+	<div class="card-width">
+		<mat-card class="small-card" background="#ffd740">
+			<mat-card-title>How you will spend your life</mat-card-title>
+		</mat-card>
+		<mat-card color="accent" class="small-card">
+			<mat-card-subtitle
+				>Enter the age you began your studies and the duration of each level in years. Clear
+				values in any education levels that don't apply to remove from
+				plot.</mat-card-subtitle
+			>
+			<mat-card-content>
+				<div *ngFor="let triple of triples">
+					<div class="double-form">
+						<form class="form">
+							<mat-form-field class="form-width">
+								<mat-label>{{ triple.label }}</mat-label>
+								<input matInput [value]="triple.begin" />
+							</mat-form-field>
+						</form>
 
-<!-- <mat-grid-list cols="4" rowHeight="1:1">
-    <mat-grid-tile *ngFor="let i of indexes">{{i}}</mat-grid-tile> it is like a for
-    <mat-grid-tile *ngFor="let i of indexes">{{i}}</mat-grid-tile>
-    <mat-grid-tile *ngFor="let i of indexes">{{i}}</mat-grid-tile>
-    <mat-grid-tile *ngFor="let i of indexes">{{i}}</mat-grid-tile>
-    
-  </mat-grid-list> to import--> 
+						<form class="form">
+							<mat-form-field class="form-width">
+								<mat-label>Duration (years)</mat-label>
+								<input matInput [value]="triple.duration" />
+							</mat-form-field>
+						</form>
+					</div>
+				</div>
 
-<!-- to insert in .ts
-  export class GridListOverviewExample {
-    indexes:number[]=[1,2,3,4,5,]
-  } -->
+				<form class="form-max">
+					<mat-form-field class="form-width-max">
+						<mat-label>Retire at</mat-label>
+						<input matInput value="62" />
+					</mat-form-field>
+				</form>
+			</mat-card-content>
+		</mat-card>
+	</div>
+</div>
+<div class="titlecolumngrid">
+	<div>Week of your birthyear (starts on your birthday, not Jan 1st) --></div>
+</div>
+<div style="display: flex; align-items: center; margin-right: 2rem;">
+	<div class="title-row-grid">Your Age in Years --></div>
+	<div class="grid-display">
+		<mat-grid-list *ngFor="let k of row" cols="53" rowHeight="1:1">
+			<mat-grid-tile class="column-year">{{ k }}</mat-grid-tile>
+			<mat-grid-tile
+				[background]="myFun(k, i)"
+				*ngFor="let i of column"
+				[style]="'margin-left:' + 0.15 * (i + 1) + 'rem;'"
+			>
+			</mat-grid-tile>
+		</mat-grid-list>
+	</div>
+</div>
