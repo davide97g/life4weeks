@@ -64,5 +64,7 @@ export class ProfileComponent implements OnInit {
 	profilePic: string = this.avatars[3];
 	constructor(public auth: AuthService, public utils: UtilsService) {}
 
-	ngOnInit(): void {}
+	ngOnInit(): void {
+		// this.auth.getAvatars().then((avatars: string[]) => console.info(avatars));
+	}
 }

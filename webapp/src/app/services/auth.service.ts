@@ -9,11 +9,12 @@ import {
 	AngularFirestoreCollection,
 } from '@angular/fire/firestore';
 
+// import { AngularFireStorage } from '@angular/fire/storage';
+
 import { Observable, of, Subject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import * as firebaseui from 'firebaseui';
 import { Record } from '@models/record';
-import { mocked as test_user } from '@models/user';
 import { Settings } from '@models/settings';
 
 // configuration for the ui
@@ -39,6 +40,7 @@ export class AuthService {
 	constructor(
 		private afAuth: AngularFireAuth,
 		private afs: AngularFirestore,
+		// private afstr: AngularFireStorage,
 		private router: Router
 	) {
 		// ? every time data is shared between component also the service has to listen
@@ -186,6 +188,16 @@ export class AuthService {
 		this.asyncOperation.next(false);
 		return res;
 	}
+
+	// /**
+	//  * firebase storage
+	//  */
+
+	// async getAvatars(): Promise<string[]> {
+	// 	let links: string[] = [];
+	// 	this.afstr.ref('avatars/');
+	// 	return links;
+	// }
 
 	async signOut() {
 		await this.afAuth.signOut();

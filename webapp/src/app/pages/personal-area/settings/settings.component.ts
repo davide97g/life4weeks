@@ -22,9 +22,10 @@ export class SettingsComponent implements OnInit {
 			.readUserSettings()
 			.then((settings: Settings) => {
 				if (settings) {
-					// todo: fix this
-					console.info(this.settings.theme, settings.theme);
-					if (settings.theme === this.settings.theme) console.info('equal');
+					this.settings = settings;
+					this.settings.theme = this.themes.find(
+						(theme: Theme) => theme.name === settings.theme.name
+					);
 				} else settings = defaultSettings;
 			})
 			.catch(err => console.error(err));
