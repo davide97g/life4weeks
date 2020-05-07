@@ -9,13 +9,14 @@ import {
 	AngularFirestoreCollection,
 } from '@angular/fire/firestore';
 
-// import { AngularFireStorage } from '@angular/fire/storage';
+import { AngularFireStorage } from '@angular/fire/storage';
 
 import { Observable, of, Subject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import * as firebaseui from 'firebaseui';
 import { Record } from '@models/record';
 import { Settings } from '@models/settings';
+import { Avatar } from '@models/avatar';
 
 // configuration for the ui
 const config = {
@@ -32,6 +33,7 @@ export class AuthService {
 	user$: Observable<User>; // user observable
 	user: User;
 	settings: Settings;
+	settings$: Subject<Settings> = new Subject<Settings>();
 	ui: firebaseui.auth.AuthUI = new firebaseui.auth.AuthUI(auth()); // login firebase ui
 	asyncOperation: Subject<boolean> = new Subject<boolean>(); // signal to the progress bar
 	records: Record[] = null; // records local copy
@@ -40,7 +42,7 @@ export class AuthService {
 	constructor(
 		private afAuth: AngularFireAuth,
 		private afs: AngularFirestore,
-		// private afstr: AngularFireStorage,
+		private afstr: AngularFireStorage,
 		private router: Router
 	) {
 		// ? every time data is shared between component also the service has to listen
@@ -186,18 +188,35 @@ export class AuthService {
 			});
 		if (res) this.settings = settings;
 		this.asyncOperation.next(false);
+		this.settings$.next(this.settings);
 		return res;
 	}
 
-	// /**
-	//  * firebase storage
-	//  */
+	/**
+	 * firebase storage
+	 */
 
-	// async getAvatars(): Promise<string[]> {
-	// 	let links: string[] = [];
-	// 	this.afstr.ref('avatars/');
-	// 	return links;
-	// }
+	async getAvatars(): Promise<Avatar[]> {
+		let links: Avatar[] = [];
+		// Create a reference under which you want to list
+		var listRef = this.afstr.ref('avatars/');
+		// Find all the prefixes and items.
+		let itemRefs = await listRef
+			.listAll()
+			.toPromise()
+			.then(res => res.items);
+		let promises = [];
+		itemRefs.forEach(itemRef => {
+			// All the items under listRef.
+			promises.push(
+				itemRef
+					.getDownloadURL()
+					.then(url => links.push({ url: url, fullPath: itemRef.fullPath }))
+			);
+		});
+		await Promise.all(promises);
+		return links;
+	}
 
 	async signOut() {
 		await this.afAuth.signOut();

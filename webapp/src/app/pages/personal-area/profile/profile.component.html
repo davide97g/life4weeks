@@ -1,17 +1,19 @@
-<mat-card *ngIf="auth.user$ | async as user" align="center" [class.mat-elevation-z0]="true">
+<mat-card
+	*ngIf="auth.user$ | async as user"
+	align="center"
+	[class.mat-elevation-z5]="true"
+	style="margin: auto 10px;"
+>
 	<mat-card-title><h2>Profile</h2></mat-card-title>
 	<mat-card-subtitle>
 		{{ user.displayName }}
-		<button mat-icon-button mat-raised-button id="edit-button" color="primary">
-			<mat-icon color="accent" id="edit-icon">edit</mat-icon>
-		</button>
 	</mat-card-subtitle>
 	<mat-card-content>
 		<img
 			id="photoURL"
-			src="{{ profilePic !== '' ? 'assets/avatars/' + profilePic : user.photoURL }}"
+			src="{{ profilePic?.url }}"
 			alt=""
-			matTooltip="{{ profilePic }}"
+			matTooltip="{{ profilePic?.fullPath }}"
 			matTooltipPosition="right"
 			matTooltipShowDelay="1000"
 		/>
@@ -31,7 +33,7 @@
 				mat-raised-button
 				color="primary"
 				[disabled]="!edit"
-				(click)="edit = false; utils.openSnackBar('User profile', 'Updated')"
+				(click)="save()"
 				matTooltip="Save the profile pic"
 				matTooltipPosition="right"
 				matTooltipShowDelay="1000"
@@ -54,8 +56,8 @@
 				<mat-select-trigger
 					><img
 						class="avatar-pic"
-						src="assets/avatars/{{ profilePic }}"
-						alt="{{ profilePic }}"
+						src="{{ profilePic?.url }}"
+						alt="{{ profilePic?.fullPath }}"
 				/></mat-select-trigger>
 				<h3 style="text-align: center;">
 					<mat-option
@@ -65,8 +67,8 @@
 					>
 						<img
 							class="avatar-pic"
-							src="assets/avatars/{{ avatar }}"
-							alt="{{ avatar }}"
+							src="{{ avatar.url }}"
+							alt="{{ avatar.fullPath }}"
 						/>
 					</mat-option>
 				</h3>

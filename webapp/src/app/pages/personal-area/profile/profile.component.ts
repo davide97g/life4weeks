@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '@services/auth.service';
 import { UtilsService } from '@services/utils.service';
+import { Settings } from '@models/settings';
+import { Avatar } from '@models/avatar';
 
 @Component({
 	selector: 'app-profile',
@@ -9,62 +11,41 @@ import { UtilsService } from '@services/utils.service';
 })
 export class ProfileComponent implements OnInit {
 	edit: boolean = false;
-	avatars: string[] = [
-		'boy.png',
-		'boy-1.png',
-		'boy-10.png',
-		'boy-11.png',
-		'boy-12.png',
-		'boy-13.png',
-		'boy-14.png',
-		'boy-15.png',
-		'boy-16.png',
-		'boy-17.png',
-		'boy-18.png',
-		'boy-19.png',
-		'boy-2.png',
-		'boy-20.png',
-		'boy-21.png',
-		'boy-22.png',
-		'boy-3.png',
-		'boy-4.png',
-		'boy-5.png',
-		'boy-6.png',
-		'boy-7.png',
-		'boy-8.png',
-		'boy-9.png',
-		'girl.png',
-		'girl-1.png',
-		'girl-10.png',
-		'girl-11.png',
-		'girl-12.png',
-		'girl-13.png',
-		'girl-14.png',
-		'girl-15.png',
-		'girl-16.png',
-		'girl-17.png',
-		'girl-18.png',
-		'girl-19.png',
-		'girl-2.png',
-		'girl-20.png',
-		'girl-21.png',
-		'girl-22.png',
-		'girl-23.png',
-		'girl-24.png',
-		'girl-25.png',
-		'girl-26.png',
-		'girl-3.png',
-		'girl-4.png',
-		'girl-5.png',
-		'girl-6.png',
-		'girl-7.png',
-		'girl-8.png',
-		'girl-9.png',
-	];
-	profilePic: string = this.avatars[3];
+	avatars: Avatar[] = [];
+	profilePic: Avatar;
+	settings: Settings;
 	constructor(public auth: AuthService, public utils: UtilsService) {}
 
 	ngOnInit(): void {
-		// this.auth.getAvatars().then((avatars: string[]) => console.info(avatars));
+		this.auth.settings$.subscribe((settings: Settings) => {
+			this.settings = settings;
+			console.info(this.settings.avatar);
+			this.auth.getAvatars().then((avatars: Avatar[]) => {
+				this.avatars = avatars;
+				this.profilePic = this.avatars.find(
+					(avatar: Avatar) => avatar.fullPath == this.settings.avatar
+				);
+			});
+		});
+	}
+
+	save() {
+		this.edit = false;
+		this.settings.avatar = this.profilePic.fullPath;
+		this.auth.settings$.next(this.settings);
+		this.auth
+			.saveUserSettings(this.settings)
+			.then((res: boolean) =>
+				res
+					? this.utils.openSnackBar('Profile pic saved', '👍')
+					: this.utils.openSnackBar(
+							'Error while saving profile pic',
+							'Please try again 🙏'
+					  )
+			)
+			.catch(err => {
+				console.error(err);
+				this.utils.openSnackBar('Something went wrong', '💀💀💀');
+			});
 	}
 }

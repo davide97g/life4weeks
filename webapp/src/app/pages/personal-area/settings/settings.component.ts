@@ -18,17 +18,15 @@ export class SettingsComponent implements OnInit {
 	constructor(public utils: UtilsService, private dialog: MatDialog, private auth: AuthService) {}
 
 	ngOnInit(): void {
-		this.auth
-			.readUserSettings()
-			.then((settings: Settings) => {
-				if (settings) {
-					this.settings = settings;
-					this.settings.theme = this.themes.find(
-						(theme: Theme) => theme.name === settings.theme.name
-					);
-				} else settings = defaultSettings;
-			})
-			.catch(err => console.error(err));
+		this.auth.settings$.subscribe((settings: Settings) => {
+			if (settings) {
+				this.settings = settings;
+				this.settings.theme = this.themes.find(
+					(theme: Theme) => theme.name === settings.theme.name
+				);
+				console.info('settings-subscribe', this.settings.avatar);
+			} else settings = defaultSettings;
+		});
 	}
 
 	saveSettings() {

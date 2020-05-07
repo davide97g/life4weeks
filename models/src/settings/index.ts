@@ -13,6 +13,7 @@ export interface Settings {
 	dateFormat: string; // customize how date is presented dd/mm/yyyy - mm/dd/yyyy - ...
 	customEmotions: Emotion[]; // list of custom emotion colors --> equal to the original but with different colors
 	theme: Theme; // site theme --> change the entire site theme
+	avatar: string; // fullPath of the avatar
 	/**	other settings here	*/
 }
 
@@ -26,4 +27,5 @@ export const defaultSettings: Settings = {
 	dateFormat: 'dd/MM/yyyy',
 	theme: themes[0],
 	customEmotions: EmotionList,
+	avatar: 'avatars/boy-1.png',
 };
