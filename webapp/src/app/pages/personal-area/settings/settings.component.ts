@@ -24,7 +24,6 @@ export class SettingsComponent implements OnInit {
 				this.settings.theme = this.themes.find(
 					(theme: Theme) => theme.name === settings.theme.name
 				);
-				console.info('settings-subscribe', this.settings.avatar);
 			} else settings = defaultSettings;
 		});
 	}

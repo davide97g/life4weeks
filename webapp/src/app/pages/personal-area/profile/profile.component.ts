@@ -19,7 +19,6 @@ export class ProfileComponent implements OnInit {
 	ngOnInit(): void {
 		this.auth.settings$.subscribe((settings: Settings) => {
 			this.settings = settings;
-			console.info(this.settings.avatar);
 			this.auth.getAvatars().then((avatars: Avatar[]) => {
 				this.avatars = avatars;
 				this.profilePic = this.avatars.find(
