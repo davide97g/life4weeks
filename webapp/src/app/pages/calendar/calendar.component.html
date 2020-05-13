@@ -63,15 +63,19 @@
 					<div class="double-form">
 						<form class="form">
 							<mat-form-field class="form-width">
-								<mat-label >{{ triple.label }}</mat-label>
-								<input id={{triple.id}}begin matInput [value]="triple.begin" />
+								<mat-label>{{ triple.label }}</mat-label>
+								<input id="{{ triple.id }}begin" matInput [value]="triple.begin" />
 							</mat-form-field>
 						</form>
 
 						<form class="form">
 							<mat-form-field class="form-width">
 								<mat-label>Duration (years)</mat-label>
-								<input id={{triple.id}}duration matInput [value]="triple.duration" />
+								<input
+									id="{{ triple.id }}duration"
+									matInput
+									[value]="triple.duration"
+								/>
 							</mat-form-field>
 						</form>
 					</div>
@@ -94,7 +98,18 @@
 <div style="display: flex; align-items: center; margin-right: 2rem;">
 	<div class="title-row-grid">Your Age in Years --></div>
 	<div class="grid-display">
-		<mat-grid-list *ngFor="let k of row" cols="53" rowHeight="1:1">
+		<table style="width: 100%;">
+			<tr *ngFor="let k of row">
+				<th class="column-year">{{ k }}</th>
+				<th
+					*ngFor="let i of column"
+					[background]="myFun(k, i)"
+					[style]="'margin-left:' + 0.15 * (i + 1) + 'rem;'" 
+				></th>
+			</tr>
+		</table>
+
+		<!-- <mat-grid-list *ngFor="let k of row" cols="53" rowHeight="1:1">
 			<mat-grid-tile class="column-year">{{ k }}</mat-grid-tile>
 			<mat-grid-tile
 				[background]="myFun(k, i)"
@@ -102,6 +117,6 @@
 				[style]="'margin-left:' + 0.15 * (i + 1) + 'rem;'"
 			>
 			</mat-grid-tile>
-		</mat-grid-list>
+		</mat-grid-list> -->
 	</div>
 </div>
