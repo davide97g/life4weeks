@@ -71,6 +71,7 @@ import { DialogInfoComponent } from './components/dialog-info/dialog-info.compon
 import { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { SquareSecondComponent } from './components/square-second/square-second.component';
 
 @NgModule({
 	declarations: [
@@ -94,6 +95,7 @@ import { MatSortModule } from '@angular/material/sort';
 		BackgroundColorDirective,
 		DialogInfoComponent,
 		ProgressBarComponent,
+		SquareSecondComponent,
 	],
 	imports: [
 		BrowserModule,
