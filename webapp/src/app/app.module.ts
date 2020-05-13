@@ -35,10 +35,8 @@ import { PersonalAreaComponent } from './pages/personal-area/personal-area.compo
 import { TermsOfServiceComponent } from './pages/terms-of-service/terms-of-service.component';
 import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.component';
 import { CalendarComponent } from './pages/calendar/calendar.component';
-import { DiaryComponent } from './pages/diary/diary.component';
-/** components */ /* name class, route to file component */
-import { MenuComponent } from '@components/menu/menu.component';
-
+import { DiaryComponent } from './pages/diary/diary.component'; /* name class, route to file component */
+/** components */ import { MenuComponent } from '@components/menu/menu.component';
 
 /** services */
 import { UtilsService } from '@services/utils.service';
@@ -71,7 +69,6 @@ import { DialogInfoComponent } from './components/dialog-info/dialog-info.compon
 import { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import { SquareSecondComponent } from './components/square-second/square-second.component';
 
 @NgModule({
 	declarations: [
@@ -95,7 +92,6 @@ import { SquareSecondComponent } from './components/square-second/square-second.
 		BackgroundColorDirective,
 		DialogInfoComponent,
 		ProgressBarComponent,
-		SquareSecondComponent,
 	],
 	imports: [
 		BrowserModule,
