@@ -13,6 +13,9 @@ export class SquareSecondComponent implements OnInit {
 		this.startAnimation();
 	}
 	startAnimation() {
-		setTimeout(() => {}, this.time);
+		setInterval(() => {
+			// todo: here modify width
+			console.info('animating');
+		}, this.time);
 	}
 }
