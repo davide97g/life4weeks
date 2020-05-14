@@ -101,11 +101,11 @@
 		<table style="width: 100%;">
 			<tr *ngFor="let k of row">
 				<th class="column-year">{{ k }}</th>
-				<th
+				<td
 					*ngFor="let i of column"
 					[background]="myFun(k, i)"
-					[style]="'margin-left:' + 0.15 * (i + 1) + 'rem;'" 
-				></th>
+					class="calendar_square"
+				></td>
 			</tr>
 		</table>
 
