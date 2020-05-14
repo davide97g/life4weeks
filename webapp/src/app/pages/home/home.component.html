@@ -1,14 +1,19 @@
-<mat-card align="center" style="width: 80%; margin: auto;" class="mat-elevation-z20">
-	<mat-card-title> How short your life is </mat-card-title>
+<mat-card align="center" style="width: 80%; margin: auto;" class="mat-elevation-z0">
 	<mat-card-content>
-		<mat-card id="now">
+		<mat-card id="now" style="margin: 40px auto;">
 			<mat-card-subtitle> All we have are <strong>seconds</strong> </mat-card-subtitle>
 			<mat-card-content>
-				<div [@zeroFull]="state" id="square-second" class="mat-elevation-z2" [background]="'#ffd740'"></div>
+				<div
+					[@zeroFull]="state"
+					id="square-second"
+					class="mat-elevation-z2"
+					[background]="'#ffd740'"
+				></div>
 			</mat-card-content>
 			<mat-card-subtitle>
 				NOW
 			</mat-card-subtitle>
+			<mat-card-subtitle> The only thing that <strong>counts</strong>. </mat-card-subtitle>
 		</mat-card>
 	</mat-card-content>
 </mat-card>
