@@ -44,7 +44,6 @@
 
 -   `$ cd functions`
 -   > first time only `$ npm i`
--   > > first time only and with **admin** privileges `$ npm run link`
 -   `$ npm run build`
 
 ## Test
@@ -59,9 +58,49 @@
 
 -   `$ cd functions`
 -   > first time only `$ npm i`
--   > > first time only and with **admin** privileges `$ npm run link`
 -   `$ npm run start`
 
 ## Deploy
 
 Just `push` your `commit` with github and the `github workflow` _(inside `.github\workflows` folder)_ will **automagically** handle it.
+
+## Versioning
+
+### Git Flow
+
+We use `gitflow` and the project is organized in 4 **types** branches:
+
+-   `master` : the version deployed to _firebase hosting_
+-   `develop` : where all functionalities are developed
+-   `feature/` : developing modular functionality
+-   `hotfix/` : rapid changes directly to master
+
+### Merging
+
+-   **merge from develop (feature)** : inside _feature/\<your-feature>_ type
+    ```
+    $ git merge develop
+    ```
+-   **merge into develop (feature)** : inside _develop_ type
+
+    ```
+    $ git merge feature/<your-feature>
+    ```
+
+-   **merge into master (develop)** : inside _master_ type
+
+    ```
+    $ git merge develop
+    ```
+
+-   **merge into master (hotfix)** : inside _master_ type
+
+    ```
+    $ git merge hotfix/<your-hotfix>
+    ```
+
+To publish your merges just type:
+
+```
+$ git push
+```
