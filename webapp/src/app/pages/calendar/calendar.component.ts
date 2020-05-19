@@ -92,7 +92,7 @@ export class CalendarComponent {
 	];
 	intervals: Interval[] = [
 		{
-			inizio: { k: 6, i: 0},
+			inizio: { k: 6, i: 0 },
 			fine: { k: 11, i: 0 },
 			color: '#ababab',
 			name: this.triples[0].id,

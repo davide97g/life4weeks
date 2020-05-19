@@ -98,14 +98,14 @@
 <div style="display: flex; align-items: center; margin-right: 2rem;">
 	<div class="title-row-grid">Your Age in Years --></div>
 	<div class="grid-display">
-		<table style="width: 100%;">
+		<table>
 			<tr *ngFor="let k of row">
 				<th class="column-year">{{ k }}</th>
-				<td
-					*ngFor="let i of column"
-					[background]="myFun(k, i)"
-					class="calendar_square"
-				></td>
+				<td *ngFor="let i of column" [background]="myFun(k, i)" class="calendar_square">
+					<span class="tooltiptext"
+						>Year {{ k }} Week {{ i }} Week {{ k * i }} of your life</span
+					>
+				</td>
 			</tr>
 		</table>
 
