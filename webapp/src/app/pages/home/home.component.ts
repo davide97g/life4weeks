@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'app-home',
@@ -28,7 +29,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 export class HomeComponent implements OnInit {
 	state: string = 'zero';
 	time: number = 500;
-	constructor() {}
+	constructor(public router: Router) {}
 
 	ngOnInit(): void {
 		setInterval(() => (this.state = this.state == 'zero' ? 'full' : 'zero'), this.time);
